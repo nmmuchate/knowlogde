@@ -38,8 +38,9 @@ const actions = {
   },
 
   loginUser({}, payload){
-    dbAuth.signInWithEmailAndPassword(payload.email, payload.password).then(response => {
-      console.log('response', response)
+    dbAuth.signInWithEmailAndPassword(payload.email, payload.password)
+      .then(response => {
+        console.log('response', response)
       .catch(error => {
         console.log(error.message)
       })
