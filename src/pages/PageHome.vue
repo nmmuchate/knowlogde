@@ -4,8 +4,7 @@
       <q-tabs
         v-model="tab"
         dense
-        mobile-arrows
-        class="text-black shadow-0"
+        class="text-black shadow-0 tabsD"
       >
         <q-tab name="Português" label="Português" />
         <q-tab name="Matematica" label="Matematica" />
@@ -20,7 +19,7 @@
           <div class="imgExam">
             <q-item>
               <q-item-section>
-                <img src="https://www.timeshighereducation.com/student/sites/default/files/styles/default/public/multiple.jpg?itok=IaZlOkw_"/>
+
               </q-item-section>
               <q-item-label class="text-bold">Exame de admissão</q-item-label>
             </q-item>
@@ -48,5 +47,12 @@ export default {
   img{
     width: 50px;
     height: 170px;
+  }
+  .tabsD{
+    font-family: 'jost', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 23px;
   }
 </style>

@@ -57,7 +57,7 @@ const actions = {
       }
       else {
         //User is logged out
-        this.$router.replace('/auth')
+        this.$router.replace('/')
       }
     })
   },

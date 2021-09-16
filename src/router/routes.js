@@ -7,6 +7,8 @@ const routes = [
       { path: '', component: () => import('pages/Index.vue') },
       { path: '/settings', component: () => import('pages/PageSettings.vue') },
       { path: '/home', component: () => import('pages/PageHome.vue') },
+      { path: '/exams', component: () => import('pages/PageExams.vue') },
+      { path: '/countdown', component: () => import('pages/PageCountDown.vue') },
     ]
   },
 

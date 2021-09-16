@@ -4,7 +4,7 @@
       <q-form @submit="submitUser">
         <q-card class="my-card full-width">
           <q-card-section class="text-center">
-            <h6 class="q-mt-lg q-mb-md">Bem-vindo</h6>
+            <h6 class="q-mt-lg q-mb-md">Bem-vindo 🙋</h6>
             <div class="q-px-xs q-pb-md">
               <q-input
                 v-model="formData.name"
@@ -12,7 +12,13 @@
                 outlined
                 type="name"
                 label="Nome"
-              />
+              >
+
+                <template v-slot:append>
+                  <q-icon color="indigo-5" name="person" />
+                </template>
+
+              </q-input>
             </div>
             <div class="q-px-xs">
               <q-input
@@ -20,7 +26,12 @@
                 outlined
                 type="email"
                 label="email"
-              />
+              >
+                  <template v-slot:append>
+                    <q-icon color="indigo-5" name="email" />
+                  </template>
+
+              </q-input>
             </div>
             <div class="q-px-xs q-pt-md">
               <q-input
@@ -28,7 +39,12 @@
                 outlined
                 type="password"
                 label="Password"
-              />
+              >
+                <template v-slot:append>
+                  <q-icon color="indigo-5" name="vpn_key" />
+                </template>
+
+              </q-input>
             </div>
           </q-card-section>
           <div class="q-px-lg q-py-md">

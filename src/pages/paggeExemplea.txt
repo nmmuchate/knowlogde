@@ -1,0 +1,104 @@
+<template>
+  <q-page class="">
+    <div
+      v-for="(element, index) in questions.slice(questionCounter,questionCounter1)"
+      :key="index"
+    >
+      <div class="text-center questions">
+        <h6>{{ element.question }}</h6>
+      </div>
+    <div
+      v-for="(elementAnswers, index) in element.choices"
+      :key="index"
+      class=" q-pa-lg answers flex column flex-center"
+    >
+    <p class="choice-prefix">A</p>
+      <q-btn
+        data-number="1"
+        class="choice-container"
+        :class="answerIsCorrect ? verifyAnswers(elementAnswers) : ''"
+        @click="chooseChoice()"
+        outline
+        rounded
+        color="primary"
+        :label="elementAnswers.choice"
+      />
+    </div>
+    </div>
+  </q-page>
+</template>
+
+<script>
+export default {
+  data() {
+    return{
+      questions:[
+        {
+          question: 'Inside which HTML element do we put the JavaScript??',
+          choices:[
+            {choice: '<script>', answer:true},
+            {choice: '<javascript>'},
+            {choice: '<js>'},
+            {choice: '<scripting>'},
+          ]
+        },
+        {
+          question: 'Calcula a massa do sol?',
+          choices:[
+            {choice: '5453165'},
+            {choice: '52561'},
+            {choice: '15189'},
+            {choice: '231256456', answer:true},
+          ]
+        },
+        {
+          question: 'Some question dumb?',
+          choices:[
+            {choice: 'Baka'},
+            {choice: 'Bakaero'},
+            {choice: 'Badjia', answer:true},
+            {choice: 'Cara de Badjia'},
+          ]
+        },
+      ],
+      answerIsCorrect: false,
+      questionCounter: 0,
+      questionCounter1: 1,
+    }
+  },
+  methods: {
+    verifyAnswers(answer){
+      console.log(answer)
+      const classToApply = answer.answer ? 'correct' : 'incorrect'
+      console.log('classToApply',classToApply)
+      return classToApply
+    },
+    chooseChoice() {
+      this.answerIsCorrect = true
+    }
+  }
+}
+</script>
+
+<style>
+  .choice-container{
+    width: 90%;
+  }
+  .choice-container:hover{
+    cursor: none;
+    box-shadow: 0 0.4rem 1.4rem 0 rgba(255, 0, 0, 0.5);
+    transform: translateY(-0.1rem);
+    transition: transform 150ms;
+  }
+  .choice-prefix {
+    padding: 0.5rem 1.5rem;
+    background-color: red;
+    color: white;
+  }
+  .correct {
+    background-color: green;
+  }
+  .incorrect {
+    background-color: red;
+  }
+</style>
