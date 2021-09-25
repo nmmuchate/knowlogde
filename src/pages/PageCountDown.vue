@@ -1,8 +1,16 @@
 <template>
   <div class="justify-center column flex flex-center">
    <h6> {{ timeDisplay }} </h6>
-   <q-btn color="green" push v-if='!timer && totalTime !== 0' @click="startTimer">Start</q-btn>
-   <q-btn color="red" push v-if="resetButton" @click="resetTimer()">Stop</q-btn>
+    <q-btn
+     color="green"
+     push
+     v-if='!timer && totalTime !== 0'
+     @click="startTimer">Start</q-btn>
+    <q-btn
+     color="red"
+     push
+     v-if="resetButton"
+     @click="resetTimer()">Stop</q-btn>
   </div>
 </template>
 

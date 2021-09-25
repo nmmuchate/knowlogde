@@ -9,6 +9,7 @@ const routes = [
       { path: '/home', component: () => import('pages/PageHome.vue') },
       { path: '/exams', component: () => import('pages/PageExams.vue') },
       { path: '/countdown', component: () => import('pages/PageCountDown.vue') },
+      { path: '/register', component: () => import('pages/NewAccount.vue') },
     ]
   },
 
