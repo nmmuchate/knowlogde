@@ -4,8 +4,7 @@
       v-if="showHeader"
       reveal
       class="bg-white text-black">
-        <div class="row">
-          <div class="col-4">
+        <div class="q-pa-md">
             <q-toolbar>
               <q-btn
                 flat
@@ -15,16 +14,15 @@
                 aria-label="Menu"
                 @click="leftDrawerOpen = !leftDrawerOpen"
               />
+              <q-toolbar-title>
+               <strong>Knowlodge</strong>
+              </q-toolbar-title>
+              <q-btn class="" round>
+                <q-avatar size="42px">
+                  <img src="https://scontent.fmpm4-1.fna.fbcdn.net/v/t1.6435-9/96734858_2671339216481401_3707348828546924544_n.jpg?_nc_cat=110&ccb=1-5&_nc_sid=8bfeb9&_nc_ohc=BbQlaMc7hxIAX8vEjuW&_nc_ht=scontent.fmpm4-1.fna&oh=3886711320ec9f25752e65b2a70b848d&oe=61737F6B">
+                </q-avatar>
+              </q-btn>
             </q-toolbar>
-          </div>
-          <div class="col-4"></div>
-          <div class="col-4">
-            <q-btn class="" round>
-              <q-avatar size="42px">
-                <img src="https://scontent.fmpm4-1.fna.fbcdn.net/v/t1.6435-9/96734858_2671339216481401_3707348828546924544_n.jpg?_nc_cat=110&ccb=1-3&_nc_sid=8bfeb9&_nc_ohc=bGKMaXKkHy4AX8ghxhV&_nc_ht=scontent.fmpm4-1.fna&oh=5f920810964b1b56902af95aaf26254b&oe=613042EB">
-              </q-avatar>
-            </q-btn>
-          </div>
         </div>
     </q-header>
 
