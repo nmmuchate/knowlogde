@@ -1,6 +1,7 @@
 <template>
   <q-page>
     <div>
+      <h6 class="q-my-none q-pt-md q-mx-md">Preparação de exame</h6>
       <q-tabs
         v-model="tab"
         dense
@@ -13,20 +14,43 @@
         <q-tab name="Biologia" label="Biologia" />
       </q-tabs>
     </div>
-    <div class="q-ma-xl">
+    <div class="q-ma-md">
       <div class="row">
-        <div class="col-6 bg-red justify-center ">
+        <div class="col-6 q-pa-md">
+          <div class="imgExam q-mb-md">
+            <q-card class="my-card">
+              <q-img src="https://cdn.quasar.dev/img/parallax2.jpg"></q-img>
+              <q-card-actions>
+                <q-btn class="text-center" no-caps flat>Novo Jogo</q-btn>
+              </q-card-actions>
+            </q-card>
+          </div>
           <div class="imgExam">
-            <q-item>
-              <q-item-section>
-
-              </q-item-section>
-              <q-item-label class="text-bold">Exame de admissão</q-item-label>
-            </q-item>
+            <q-card class="my-card">
+              <q-img src="https://cdn.quasar.dev/img/parallax2.jpg"></q-img>
+              <q-card-actions>
+                <q-btn class="text-center" no-caps flat>Desafios</q-btn>
+              </q-card-actions>
+            </q-card>
           </div>
         </div>
-        <div class="col-6 bg-green">
-
+        <div class="col-6 q-pa-md">
+          <div class="q-mb-md">
+            <q-card class="my-card">
+              <q-img src="https://cdn.quasar.dev/img/parallax2.jpg"></q-img>
+              <q-card-actions>
+                <q-btn class="text-center" no-caps flat>Contra-relógio</q-btn>
+              </q-card-actions>
+            </q-card>
+          </div>
+          <div>
+            <q-card class="my-card">
+              <q-img src="https://cdn.quasar.dev/img/parallax2.jpg"></q-img>
+              <q-card-actions>
+                <q-btn class="text-center" no-caps flat>Ranking</q-btn>
+              </q-card-actions>
+            </q-card>
+          </div>
         </div>
       </div>
     </div>
