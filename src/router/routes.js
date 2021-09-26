@@ -10,6 +10,8 @@ const routes = [
       { path: '/exams', component: () => import('pages/PageExams.vue') },
       { path: '/countdown', component: () => import('pages/PageCountDown.vue') },
       { path: '/register', component: () => import('pages/NewAccount.vue') },
+      { path: '/chat', component: () => import('pages/Chat.vue') },
+      { path: '/records', component: () => import('pages/Records.vue') },
     ]
   },
 

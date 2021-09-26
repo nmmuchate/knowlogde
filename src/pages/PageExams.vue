@@ -112,6 +112,7 @@ export default {
         this.nextQuestion()
       }, 1000)
         // this.resetTimer()
+      this.startTimer()
       console.log('score::',this.score)
     },
     verify(answer){
@@ -122,73 +123,23 @@ export default {
       this.b++
       this.selected = false
     },
+    startTimer() {
+      this.timer = setInterval(() => this.totalTime--, 1000)
+      this.resetButton = true
+     },
+    stopTimer() {
+      clearInterval(this.timer);
+      this.timer = null
+      this.resetButton = true
+    },
+    resetTimer() {
+      this.totalTime = this.displayed
+      clearInterval(this.timer)
+      this.timer = null
+      this.resetButton = false
+      this.startTimer()
+    }
   }
-    // countDownTimer(){
-    //   if(this.countDown > 0){
-    //     setTimeout(() => {
-    //       this.countDown -= 1
-    //       this.countDownTimer()
-    //     },1000)
-    //   }
-    // }
-  //   showRemaining() {
-  //       const timer = setInterval(() => {
-  //         const now = new Date()
-  //         const end = new Date(2021, 7, 18, 14, 10, 10)
-  //         const distance = end.getTime() - now.getTime();
-
-  //         if( distance < 0 ){
-  //           clearInterval(timer);
-  //           return
-  //         }
-
-  //         const day = Math.floor((distance / this.days))
-  //         const hour = Math.floor((distance % this.days) / this.hours)
-  //         const minute = Math.floor((distance % this.hours) / this.minutes)
-  //         const second = Math.floor((distance % this.minutes) / this.seconds)
-
-
-  //         this.displayDays = day < 10 ? '0' + day : day
-  //         this.displayHours = hour < 10 ? '0' + hour : hour
-  //         this.displayMinutes = minute < 10 ? '0' + minute : minute
-  //         this.displaySeconds = second < 10 ? '0' + second : second
-
-  //         console.log('seconds::',second )
-
-  //       }, 1000)
-  //     }
-  //   startTimer() {
-  //     this.timer = setInterval(() => this.totalTime--, 1000)
-  //   },
-  //   resetTimer(){
-  //     this.totalTime = this.displayed
-  //     clearInterval(this.timer)
-  //     this.timer = null
-  //   }
-  // },
-  //   mounted() {
-  //     this.startTimer()
-  //   }
-  // watch: {
-  //   timerEnabled(value) {
-  //     if(value) {
-  //       setTimeout(() => {
-  //         this.countDown--
-  //       },1000)
-  //     }
-  //   },
-  //   timerCount: {
-  //     handler(value) {
-  //       if(value > 0 && this.timerEnabled) {
-  //         setTimeout(() => {
-  //           this.countDown--
-  //         },1000)
-  //       }
-  //       console.log(this.countDown)
-  //     },
-  //     immediate: true
-  //   }
-  // }
 
 }
 </script>

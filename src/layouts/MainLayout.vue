@@ -90,6 +90,7 @@ export default {
       let currentPath = this.$route.fullPath
       if (currentPath == '/settings') return this.isShowedHeader
       else if (currentPath == '/home') return this.isShowedHeader
+      else if (currentPath == '/records') return this.isShowedHeader
     }
   }
 }

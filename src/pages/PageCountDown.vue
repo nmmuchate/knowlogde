@@ -59,6 +59,7 @@
         clearInterval(this.timer)
         this.timer = null
         this.resetButton = false
+        this.startTimer()
       }
     }
   }
