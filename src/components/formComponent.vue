@@ -64,6 +64,7 @@
           </q-card-section>
           <div class="q-px-lg q-py-md">
               <q-btn
+                to="home"
                 type="submit"
                 color="indigo-6"
                 text-color="white"

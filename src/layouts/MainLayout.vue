@@ -28,22 +28,28 @@
 
     <q-drawer
       v-model="leftDrawerOpen"
-      show-if-above
+      side="left"
+      behavior="mobile"
       bordered
-      content-class="bg-grey-1"
     >
-      <q-list>
-        <q-item-label
-          header
-          class="text-grey-8"
-        >
-          Essential Links
-        </q-item-label>
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
+      <q-list dark>
+        <q-item-label header>Navigation</q-item-label>
+
+        <q-item
+          v-for="nav in navs"
+          :key="nav.label"
+          :to="nav.to"
+          class="text-grey-10"
+          exact
+          clickable>
+            <q-item-section avatar>
+              <q-icon :name="nav.icon" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>{{ nav.label }}</q-item-label>
+            </q-item-section>
+        </q-item>
+
       </q-list>
     </q-drawer>
 
@@ -55,34 +61,34 @@
 </template>
 
 <script>
-import EssentialLink from 'components/EssentialLink.vue'
-
-const linksData = [
-  {
-    title: 'Docs',
-    icon: 'school',
-    link: 'https://quasar.dev'
-  },
-  {
-    title: 'Github',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  }
-];
-
 export default {
   name: 'MainLayout',
-  components: { EssentialLink },
   data () {
     return {
       leftDrawerOpen: false,
-      essentialLinks: linksData,
-      isShowedHeader: true
+      isShowedHeader: true,
+      navs: [
+          {
+            label:'Inicio',
+            icon:'home',
+            to:'/home'
+          },
+            {
+            label:'Conversas',
+            icon:'chat',
+            to:'/chat'
+          },
+          {
+            label:'Recordes',
+            icon:'star',
+            to:'/records'
+          },
+          {
+            label:'Definições',
+            icon:'settings',
+            to:'/settings'
+          }
+        ]
     }
   },
   computed: {

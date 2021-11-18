@@ -1,14 +1,15 @@
 <template>
-  <div class="container-app fullscreen bg-indigo-1">
+  <q-page class="container-app fullscreen bg-indigo-1">
+
     <div class="container-quiz">
       <div
         v-for="(element, index) in questions.slice(a,b)"
         :key="index"
         class="box"
       >
-        <div class="box-question-round">
-          <div class="box-question text-center ">
-            <h6>{{ element.question }}</h6>
+        <div class="box-question-round bg-indigo-5">
+          <div class=" row box-question text-center justify-center items-center">
+            <h6 style="margin-top: 45px;">{{ element.question }}</h6>
           </div>
         </div>
         <div class="countdown flex flex-center">
@@ -35,8 +36,27 @@
           />
         </div>
       </div>
+      <q-footer class="q-pa-md" >
+        <div class="row">
+            <q-btn
+              push
+              icon="arrow_back"
+              color="white"
+              text-color="indigo-5"
+              label="voltar"
+            />
+            <q-space />
+            <q-btn
+              push
+              icon="arrow_forward"
+              color="white"
+              text-color="indigo-5"
+              label="Próximo"
+            />
+        </div>
+      </q-footer>
     </div>
-  </div>
+  </q-page>
 </template>
 
 <script>
@@ -79,12 +99,13 @@ export default {
           ]
         },
       ],
+      // availableQuestions = [],
       a:0,
       b:1,
       selected: false,
       score:0,
       timer: null,
-      totalTime: 1 * 60,
+      totalTime: 0.25 * 60,
       displayed: 1 * 60,
     }
   },
@@ -98,7 +119,7 @@ export default {
       return (seconds < 10 ? '0' : '') + seconds
     },
     timeDisplay() {
-      return `${this.paddedMinutes}:${this.paddedSeconds}`
+      return this.paddedSeconds
     }
   },
   methods: {
@@ -108,12 +129,12 @@ export default {
     selectAnswer(choice){
       this.selected = true
       this.incrementScore(choice)
+      this.startTimer()
       setTimeout(() => {
         this.nextQuestion()
       }, 1000)
-        // this.resetTimer()
-      this.startTimer()
-      console.log('score::',this.score)
+      this.resetTimer()
+      console.log('score::',this.questions.length)
     },
     verify(answer){
       return answer.answer ? 'correct' : 'incorrect'
@@ -125,8 +146,7 @@ export default {
     },
     startTimer() {
       this.timer = setInterval(() => this.totalTime--, 1000)
-      this.resetButton = true
-     },
+    },
     stopTimer() {
       clearInterval(this.timer);
       this.timer = null
@@ -145,6 +165,7 @@ export default {
 </script>
 
 <style>
+
   .correct{
     background-color: #9ccc65;
   }
@@ -153,10 +174,8 @@ export default {
   }
   .box-question-round{
     height: 150px;
-    margin-top: -50px;
     border-bottom-right-radius: 45px;
     border-bottom-left-radius: 45px;
-    background-color: darkslateblue;
     color: aliceblue;
   }
   .btn-choices{
@@ -164,6 +183,5 @@ export default {
   }
   .countdown{
     margin-top: -39px;
-
   }
 </style>

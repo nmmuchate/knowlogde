@@ -1,5 +1,5 @@
 <template>
-  <q-page class="flex flex-center container">
+  <!-- <q-page class="flex flex-center container">
     <div class="upper box">
       <form-component/>
       <div class="text-center q-pa-sm">
@@ -13,20 +13,29 @@
     </div>
     <div class="lower">
     </div>
+  </q-page> -->
+  <q-page class="flex flex-center">
+    <q-btn
+      to="/home"
+      unelevated
+      color="indigo-5"
+      no-caps
+      label="Entrar no Jogo"
+    />
   </q-page>
 </template>
 
 <script>
 
-export default {
-  name: 'PageIndex',
-  data() {
-    return {
-      currentPath: ''
-    }
-  },
-  components: {
-    'form-component' : require('components/formComponent.vue').default
-  }
-}
+// export default {
+//   name: 'PageIndex',
+//   data() {
+//     return {
+//       currentPath: 'login'
+//     }
+//   },
+//   components: {
+//     'form-component' : require('components/formComponent.vue').default
+//   }
+// }
 </script>
