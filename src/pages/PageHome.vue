@@ -7,31 +7,34 @@
         dense
         class="text-black shadow-0 tabsD"
       >
-        <q-tab v-for="subject in subjects"
-        :key="subject" :name="subject.name" :label="subject.name" />
+        <q-tab v-for="(subject,key) in subjects"
+        :key="key" :name="subject.name" :label="subject.name" />
       </q-tabs>
     </div>
-    <div class="q-ma-md">
-      <div class="row">
-        <div
-          v-for="elements in elemetnsInHome"
-          :key="elements"
-          class="col-6 q-pa-md"
-        >
-          <div class="imgExam q-mb-md">
-            <q-card class="my-card" >
-              <q-img :src="elements.image"></q-img>
-              <q-card-actions>
-                <q-btn
-                  :to="elements.path"
-                  class="text-center"
-                  no-caps
-                  flat>{{ elements.name }}</q-btn>
-              </q-card-actions>
-            </q-card>
+    <div class=" flex flex-center q-ma-md">
+      <q-item clickable>
+
+        <div class="row">
+          <div
+            v-for="(elements, key) in elemetnsInHome"
+            :key="key"
+            class="col-6 q-pa-md"
+          >
+            <div class="imgExam q-mb-md">
+              <q-card class="my-card" >
+                <q-img :src="elements.image"></q-img>
+                <q-card-actions>
+                  <q-btn
+                    :to="elements.path"
+                    class="text-center"
+                    no-caps
+                    flat>{{ elements.name }}</q-btn>
+                </q-card-actions>
+              </q-card>
+            </div>
           </div>
         </div>
-      </div>
+      </q-item>
     </div>
   </q-page>
 </template>
