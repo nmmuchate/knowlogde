@@ -27,6 +27,7 @@
     </q-header>
 
     <q-drawer
+      v-if="showHeader"
       v-model="leftDrawerOpen"
       side="left"
       behavior="mobile"
