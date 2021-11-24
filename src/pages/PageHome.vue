@@ -2,14 +2,14 @@
   <q-page>
     <div>
       <h6 class="q-my-none q-pt-md q-mx-md">Preparação de exame</h6>
-      <q-tabs
+      <!-- <q-tabs
         v-model="tab"
         dense
         class="text-black shadow-0 tabsD"
-      >
-        <q-tab v-for="(subject,key) in subjects"
+      > -->
+        <!-- <q-tab v-for="(subject,key) in subjects"
         :key="key" :name="subject.name" :label="subject.name" />
-      </q-tabs>
+      </q-tabs> -->
     </div>
     <div class=" flex flex-center q-ma-md">
       <q-item clickable>
@@ -49,22 +49,22 @@ export default {
         {
           name: 'Novo Jogo',
           image: 'https://cdn.quasar.dev/img/parallax2.jpg',
-          path: '/exams',
+          path: '/subjects',
         },
         {
           name: 'Contra-Relógio',
           image: 'https://cdn.quasar.dev/img/parallax2.jpg',
-          path: '/exams',
+          path: '/subjects',
         },
         {
           name: 'Desafio',
           image: 'https://cdn.quasar.dev/img/parallax2.jpg',
-          path: 'exams',
+          path: '/exams',
         },
         {
           name: 'Ranking',
           image: 'https://cdn.quasar.dev/img/parallax2.jpg',
-          path: '/exams',
+          path: '/ranking',
         }
       ],
       // subjects: [
@@ -91,7 +91,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('subjects', ['subjects']),
+    // ...mapGetters('subjects', ['subjects']),
   }
 }
 </script>

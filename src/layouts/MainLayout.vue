@@ -15,7 +15,7 @@
                 @click="leftDrawerOpen = !leftDrawerOpen"
               />
               <q-toolbar-title>
-               <strong>Knowlodge</strong>
+               <strong>{{ title }}</strong>
               </q-toolbar-title>
               <q-btn class="" round>
                 <q-avatar size="42px">
@@ -66,6 +66,7 @@ export default {
   name: 'MainLayout',
   data () {
     return {
+      title: 'Knowledge',
       leftDrawerOpen: false,
       isShowedHeader: true,
       navs: [
@@ -95,9 +96,21 @@ export default {
   computed: {
     showHeader(){
       let currentPath = this.$route.fullPath
-      if (currentPath == '/settings') return this.isShowedHeader
-      else if (currentPath == '/home') return this.isShowedHeader
-      else if (currentPath == '/records') return this.isShowedHeader
+      if (currentPath == '/settings') {
+        this.title = 'Definições'
+        return this.isShowedHeader
+      }
+      else if (currentPath == '/home') {
+        return this.isShowedHeader
+      }
+      else if (currentPath == '/ranking') {
+        this.title = 'Recordes'
+        return this.isShowedHeader
+      }
+      else if (currentPath == '/subjects') {
+        this.title = 'Disciplinas'
+        return this.isShowedHeader
+      }
     }
   }
 }

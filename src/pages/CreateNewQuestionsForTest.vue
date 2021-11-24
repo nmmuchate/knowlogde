@@ -41,6 +41,7 @@
   </div>
   <div>
     <q-select
+      v-model="response"
       :options="respostas"
       label="Resposta correta" />
   </div>
@@ -56,6 +57,7 @@ export default {
   setup () {
     return {
       model: ref(null),
+      response: ref(null),
       text: ref(''),
       options: [
         'Portugues', 'Matematica', 'Biologia', 'Quimica', 'Fisica', 'Geografia', 'Filosofia'
