@@ -1,32 +1,28 @@
+import { dbFApp } from "../../boot/firebase"
+
 const state = {
-  subjects: {
-    'ID1': {
-      name: 'Português',
-    },
-    'ID2': {
-      name: 'Quimica',
-    },
-    'ID3': {
-      name: 'Biologia',
-    },
-    'ID4': {
-      name: 'Matematica',
-    },
-    'ID5': {
-      name: 'Fisica',
-    },
-    'ID6': {
-      name: 'Geografia',
-    },
-  }
+  subjects: {}
 }
 
 const mutations = {
-
+  addCategories(state, payload) {
+    Vue.set(state.subjects, payload.name)
+  }
 }
 
 const actions = {
+  readSubjects({commit}){
 
+    let docRef = dbFApp.collection('QUIZ').doc('Categorias');
+    docRef.get().then((doc) => {
+      if (doc.exists) {
+      }else {
+        console.log('Es um perdedor')
+      }
+    }).catch((error) => {
+      console.log('error no servidor::', error)
+    })
+  }
 }
 
 const getters = {

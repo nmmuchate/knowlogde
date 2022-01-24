@@ -35,7 +35,7 @@
           </div>
         </div>
       </q-item>
-    </div>
+     </div>
   </q-page>
 </template>
 

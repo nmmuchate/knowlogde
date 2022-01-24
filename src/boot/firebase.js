@@ -3,6 +3,7 @@ import { boot } from 'quasar/wrappers'
 import firebase from 'firebase/app';
 
 import 'firebase/auth'
+import 'firebase/firestore'
 
   // Your web app's Firebase configuration
 
@@ -33,5 +34,9 @@ import 'firebase/auth'
   // firebase.analytics();
 
   let dbAuth = fbApp.auth();
+  let dbFApp = fbApp.firestore();
 
-  export {dbAuth}
+  export {
+    dbAuth,
+    dbFApp
+  }
