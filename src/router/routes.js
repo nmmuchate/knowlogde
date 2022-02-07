@@ -14,6 +14,7 @@ const routes = [
       { path: '/chat', component: () => import('pages/Chat.vue') },
       { path: '/ranking', component: () => import('pages/Records.vue') },
       { path: '/crtnqftst', component: () => import('pages/CreateNewQuestionsForTest.vue') },
+      { path: '/sets', component: () => import('pages/PageSets.vue') },
     ]
   },
 

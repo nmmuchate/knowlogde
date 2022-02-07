@@ -101,6 +101,7 @@ export default {
         return this.isShowedHeader
       }
       else if (currentPath == '/home') {
+        this.title = ''
         return this.isShowedHeader
       }
       else if (currentPath == '/ranking') {
@@ -109,6 +110,10 @@ export default {
       }
       else if (currentPath == '/subjects') {
         this.title = 'Disciplinas'
+        return this.isShowedHeader
+      }
+      else if (currentPath == '/sets') {
+        this.title = 'Escolha'
         return this.isShowedHeader
       }
     }

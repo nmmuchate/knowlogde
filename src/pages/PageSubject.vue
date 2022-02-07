@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-list  v-for="subject in bear" :key="subject">
-      <q-item  clickable v-ripple>
+      <q-item clickable v-ripple>
         <q-item-section avatar>
           <q-avatar color="indigo" text-color="white">
             {{ subject.CAT1.charAt(0) }}
@@ -98,12 +98,23 @@ import { dbFApp } from "../boot/firebase"
 export default {
   data() {
     return{
-
-      bear: []
+      bear: [],
+      cats: []
     }
   },
   computed: {
     ...mapGetters('subjects', ['subjects']),
+  },
+  methods: {
+    // renaming(){
+    //   let n = 'CAT'
+    //   let w
+    //   for(let i = 0; i<= 10; i++){
+    //     this.w=n.replace(/[0-9]/, parseInt(n.match(/[0-9]/)) + i)
+    //     return this.cats = w
+    //   }
+    //   console.log(this.cats)
+    // }
   },
   created(){
 
@@ -111,15 +122,18 @@ export default {
       docRef.get().then(querySnapshot => {
         if (querySnapshot.exists) {
            console.log(querySnapshot.data())
-            this.bear.push(querySnapshot.data())
+          this.bear.push(querySnapshot.data())
         }else {
           console.log('Es um perdedor')
         }
       }).catch((error) => {
         console.log('error no servidor::', error)
       })
-    // }
   }
+//   for(let i = 0; i<= 10; i++){
+//  this.w=this.n.replace(/[0-9]/, parseInt(this.n.match(/[0-9]/)) + i)
+//   console.log(this.w)
+// }
 }
 </script>
 
