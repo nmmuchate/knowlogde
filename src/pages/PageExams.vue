@@ -1,5 +1,9 @@
 <template>
   <q-page class="bg-grey-3 full-width">
+
+    <!-- EndOfQuizOverLay -->
+    <end-of-quiz v-if="endfoquizovr"></end-of-quiz>
+
     <!-- quiz container -->
     <div class="bg-white shadow-3 q-py-md q-px-lg rounded-borders container">
       <!-- score container -->
@@ -47,9 +51,12 @@
 
 <script>
   import { ref } from "vue";
+  import EndOfQuiz from 'src/components/Quiz/EndOfQuiz.vue'
   export default {
     data(){
       let canClick = true
+
+      let endfoquizovr = ref(false)
 
       let score = ref(0)
 
@@ -109,6 +116,7 @@
           questionCounter.value++
         }else{
           // no more questions
+          endfoquizovr.value = true
           console.log('Out of Questions')
         }
       }
@@ -175,8 +183,12 @@
         questionCounter,
         loadQuestion,
         onOptionClicked,
-        optionChosen
+        optionChosen,
+        endfoquizovr
       }
+    },
+    components:{
+      EndOfQuiz
     },
     mounted(){
       this.loadQuestion()
