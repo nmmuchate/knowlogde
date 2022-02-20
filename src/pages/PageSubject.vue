@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div >
     <q-list  v-for="subject in bear" :key="subject">
       <q-item clickable v-ripple>
         <q-item-section avatar>
@@ -97,9 +97,41 @@ import { dbFApp } from "../boot/firebase"
  import { mapGetters } from 'vuex'
 export default {
   data() {
+    let subjectsFirebaseFirestore = () =>{
+
+    }
+
+    const renaming = [
+      'CAT1',
+      'CAT2',
+      'CAT3',
+      'CAT4',
+      'CAT5',
+      'CAT6',
+      'CAT7',
+      'CAT8',
+      'CAT9',
+      'CAT10',
+    ]
+
+    const fetchSubjectsFromFirebaseFirestore = () => {
+      let docRef = dbFApp.collection('QUIZ').doc('Categorias');
+      docRef.get().then(querySnapshot => {
+        if (querySnapshot.exists) {
+           console.log(querySnapshot.data())
+          this.bear.push(querySnapshot.data())
+          console.log('beaar::', this.bear[0])
+        }else {
+          console.log('Es um perdedor')
+        }
+      }).catch((error) => {
+        console.log('error no servidor::', error)
+      })
+    }
     return{
       bear: [],
-      cats: []
+      fetchSubjectsFromFirebaseFirestore,
+      renaming
     }
   },
   computed: {
@@ -117,18 +149,7 @@ export default {
     // }
   },
   created(){
-
-      let docRef = dbFApp.collection('QUIZ').doc('Categorias');
-      docRef.get().then(querySnapshot => {
-        if (querySnapshot.exists) {
-           console.log(querySnapshot.data())
-          this.bear.push(querySnapshot.data())
-        }else {
-          console.log('Es um perdedor')
-        }
-      }).catch((error) => {
-        console.log('error no servidor::', error)
-      })
+    this.fetchSubjectsFromFirebaseFirestore()
   }
 //   for(let i = 0; i<= 10; i++){
 //  this.w=this.n.replace(/[0-9]/, parseInt(this.n.match(/[0-9]/)) + i)

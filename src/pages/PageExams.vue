@@ -50,6 +50,8 @@
 </template>
 
 <script>
+  import { dbFApp } from '../boot/firebase'
+
   import { ref } from "vue";
   import EndOfQuiz from 'src/components/Quiz/EndOfQuiz.vue'
   export default {
@@ -174,6 +176,20 @@
           }
         }, 1500)
       }
+
+      const fetchQuestionFromFirebaseFirestore = () =>{
+        let docRef = dbFApp.collection('QUIZ').doc('CAT1')
+
+        docRef.get().then(querySnapshot => {
+          if (querySnapshot.exists) {
+            console.log('Question from server::' , querySnapshot.data())
+          }else{
+            console.log('Não existe documentos')
+          }
+        }).catch((error) => {
+          console.log('Erros do servidores', error)
+        })
+      }
       return{
         countDownTimer,
         timer,
@@ -184,7 +200,8 @@
         loadQuestion,
         onOptionClicked,
         optionChosen,
-        endfoquizovr
+        endfoquizovr,
+        fetchQuestionFromFirebaseFirestore
       }
     },
     components:{
@@ -193,6 +210,9 @@
     mounted(){
       this.loadQuestion()
       this.countDownTimer()
+    },
+    created(){
+      this.fetchQuestionFromFirebaseFirestore()
     }
   }
 </script>
