@@ -33,7 +33,7 @@
                 {{ item }}
               </div>
               <!-- Option name -->
-              <div class="q-pa-sm">{{choice.choice}}</div>
+              <div class="q-pa-sm">{{choice}}</div>
             </div>
           </div>
         </div>
@@ -56,6 +56,8 @@
   import EndOfQuiz from 'src/components/Quiz/EndOfQuiz.vue'
   export default {
     data(){
+
+
       let canClick = true
 
       let endfoquizovr = ref(false)
@@ -67,47 +69,49 @@
       let questionCounter = ref(0)
       const currentQuestion = ref({
         question: '',
-        answer: 1,
-        choices: []
+        // answer: 1,
+        // choices: []
       })
       const questions=[
-          {
-            question: 'Inside which HTML element do we put the JavaScript??',
-            answer: 4,
-            choices:[
-              {choice: '<script>'},
-              {choice: 'hnfjdfdlifb'},
-              {choice: '<javascript>'},
-              {choice: '<js>'},
-              {choice: '<scripting>'},
-            ]
-          },
-          {
-            question: 'Calcula a massa do sol?',
-            answer:3,
-            choices:[
-              {choice: '5453165'},
-              {choice: '52561'},
-              {choice: '15189'},
-              {choice: '546543'},
-              {choice: '231256456'},
-            ]
-          },
-          {
-            question: 'Some question dumb?',
-            answer:2,
-            choices:[
-              {choice: 'Baka'},
-              {choice: 'Bakaero'},
-              {choice: 'ADFDSfdsfjdskfjkd'},
-              {choice: 'Badjia'},
-              {choice: 'Cara de Badjia'},
-            ]
-          },
+          // {
+          //   question: 'Inside which HTML element do we put the JavaScript??',
+          //   answer: 4,
+          //   choices:[
+          //     {choice: '<script>'},
+          //     {choice: 'hnfjdfdlifb'},
+          //     {choice: '<javascript>'},
+          //     {choice: '<js>'},
+          //     {choice: '<scripting>'},
+          //   ]
+          // },
+          // {
+          //   question: 'Calcula a massa do sol?',
+          //   answer:3,
+          //   choices:[
+          //     {choice: '5453165'},
+          //     {choice: '52561'},
+          //     {choice: '15189'},
+          //     {choice: '546543'},
+          //     {choice: '231256456'},
+          //   ]
+          // },
+          // {
+          //   question: 'Some question dumb?',
+          //   answer:2,
+          //   choices:[
+          //     {choice: 'Baka'},
+          //     {choice: 'Bakaero'},
+          //     {choice: 'ADFDSfdsfjdskfjkd'},
+          //     {choice: 'Badjia'},
+          //     {choice: 'Cara de Badjia'},
+          //   ]
+          // },
         ]
 
         // lifecycle hooks
       const loadQuestion = () => {
+        console.log('loadQuestion', questions[0])
+
         canClick = true
         // Check if there are more questions to load
         if(questions.length > questionCounter.value){
@@ -182,7 +186,8 @@
 
         docRef.get().then(querySnapshot => {
           if (querySnapshot.exists) {
-            console.log('Question from server::' , querySnapshot.data())
+            console.log('Question from server::' , querySnapshot.data().questions)
+            questions.push(querySnapshot.data().questions)
           }else{
             console.log('Não existe documentos')
           }
@@ -210,10 +215,8 @@
     mounted(){
       this.loadQuestion()
       this.countDownTimer()
-    },
-    created(){
       this.fetchQuestionFromFirebaseFirestore()
-    }
+    },
   }
 </script>
 
