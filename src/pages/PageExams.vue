@@ -17,7 +17,8 @@
       </div>
 
       <!-- question container -->
-      <div class="neumorph-1 rounded-borders bg-grey-1 q-my-md text-center text-bold">
+      <div
+        class="neumorph-1 rounded-borders bg-grey-1 q-my-md text-center text-bold">
         <div class="question bg-white q-pa-md">
           {{ currentQuestion.question }}
         </div>
@@ -25,8 +26,13 @@
 
       <!-- options container -->
       <div class="q-mt-xl">
-        <div v-for="(choice, item) in currentQuestion.choices" :key="item">
-          <div class="neumorph-1 bg-grey-3 rounded-borders q-pa-xs q-my-sm" @click="onOptionClicked(choice, item)" :ref="optionChosen">
+        <div
+          v-for="(choice, item) in currentQuestion.incorrectAnswer"
+          :key="item">
+          <div
+            class="neumorph-1 bg-grey-3 rounded-borders q-pa-xs q-my-sm"
+            @click="onOptionClicked(choice, item)"
+            :ref="optionChosen">
             <div class="bg-white rounded-borders text-bold row">
               <!-- option id -->
               <div class="bg-grey-5 rounded-borders q-pa-sm">
@@ -52,170 +58,127 @@
 <script>
   import { dbFApp } from '../boot/firebase'
 
-  import { ref } from "vue";
   import EndOfQuiz from 'src/components/Quiz/EndOfQuiz.vue'
   export default {
     data(){
 
-
-      let canClick = true
-
-      let endfoquizovr = ref(false)
-
-      let score = ref(0)
-
-      let timer = ref(1)
-
-      let questionCounter = ref(0)
-      const currentQuestion = ref({
-        question: '',
-        // answer: 1,
-        // choices: []
-      })
-      const questions=[
-          // {
-          //   question: 'Inside which HTML element do we put the JavaScript??',
-          //   answer: 4,
-          //   choices:[
-          //     {choice: '<script>'},
-          //     {choice: 'hnfjdfdlifb'},
-          //     {choice: '<javascript>'},
-          //     {choice: '<js>'},
-          //     {choice: '<scripting>'},
-          //   ]
-          // },
-          // {
-          //   question: 'Calcula a massa do sol?',
-          //   answer:3,
-          //   choices:[
-          //     {choice: '5453165'},
-          //     {choice: '52561'},
-          //     {choice: '15189'},
-          //     {choice: '546543'},
-          //     {choice: '231256456'},
-          //   ]
-          // },
-          // {
-          //   question: 'Some question dumb?',
-          //   answer:2,
-          //   choices:[
-          //     {choice: 'Baka'},
-          //     {choice: 'Bakaero'},
-          //     {choice: 'ADFDSfdsfjdskfjkd'},
-          //     {choice: 'Badjia'},
-          //     {choice: 'Cara de Badjia'},
-          //   ]
-          // },
-        ]
-
-        // lifecycle hooks
-      const loadQuestion = () => {
-        console.log('loadQuestion', questions[0])
-
-        canClick = true
-        // Check if there are more questions to load
-        if(questions.length > questionCounter.value){
-          timer.value = 1
-
-          currentQuestion.value = questions[questionCounter.value]
-
-          questionCounter.value++
-        }else{
-          // no more questions
-          endfoquizovr.value = true
-          console.log('Out of Questions')
-        }
-      }
-      // Methods/functions
-      let itemsRef=[]
-      const optionChosen = element => {
-        if(element){
-          itemsRef.push(element)
-        }
-      }
-
-      const clearSelected = divSelected => {
-        setTimeout(() => {
-          // divSelected.classList.remove('option-correct')
-          // divSelected.classList.remove('option-wrong')
-          // divSelected.classList.add('option-default')
-          loadQuestion()
-        }, 1000)
-      }
-
-      const onOptionClicked = (choice, item) => {
-
-        if(canClick){
-          // TODO select an option
-          const divContainer = itemsRef[item]
-          const optionID = item+1
-          if(currentQuestion.value.answer == optionID){
-            // divContainer.classList.add('option-correct')
-            // divContainer.classList.add('option-wrong')
-            // divContainer.classList.remove('option-default')
-            score.value += 10
-          }else{
-            // divContainer.classList.add('option-wrong')
-            // divContainer.classList.add('option-correct')
-            // divContainer.classList.remove('option-default')
-          }
-          timer.value = 1
-          canClick = false
-          // TODO: go to next question
-          clearSelected(divContainer);
-        }else{
-          // can't select option
-          console.log('cant select question')
-        }
-
-      }
-
-      const countDownTimer = () =>{
-        let countDown = setInterval(() => {
-          if(timer.value > 0){
-            timer.value-=0.1;
-          }else{
-            console.log('time is up');
-            clearInterval(countDown)
-          }
-        }, 1500)
-      }
-
-      const fetchQuestionFromFirebaseFirestore = () =>{
-        let docRef = dbFApp.collection('QUIZ').doc('CAT1')
-
-        docRef.get().then(querySnapshot => {
-          if (querySnapshot.exists) {
-            console.log('Question from server::' , querySnapshot.data().questions)
-            questions.push(querySnapshot.data().questions)
-          }else{
-            console.log('Não existe documentos')
-          }
-        }).catch((error) => {
-          console.log('Erros do servidores', error)
-        })
-      }
       return{
-        countDownTimer,
-        timer,
-        currentQuestion,
-        questions,
-        score,
-        questionCounter,
-        loadQuestion,
-        onOptionClicked,
-        optionChosen,
-        endfoquizovr,
-        fetchQuestionFromFirebaseFirestore
+        canClick: true,
+        endfoquizovr: false,
+        score: 0,
+        timer: 1,
+        questionCounter:0,
+        questions: [],
+        currentQuestion: {
+          question: '',
+          correctAnswer: '',
+          incorrectAnswer: []
+        },
+        itemsRef: [],
+        subjectsf: [
+          'CAT1',
+          'CAT10',
+          'CAT2',
+          'CAT3',
+          'CAT4',
+          'CAT5',
+          'CAT6',
+          'CAT7',
+          'CAT8',
+          'CAT9',
+        ]
       }
     },
     components:{
       EndOfQuiz
     },
+    methods: {
+      loadQuestion(){
+        this.canClick = true
+        if (this.questions.length > this.questionCounter) {
+          this.timer = 1
+
+          this.currentQuestion = this.questions[this.questionCounter]
+
+          this.questionCounter++
+        }else {
+          this.endfoquizovr = true
+          console.log('Out of Questions')
+        }
+      },
+      optionChosen(element){
+        if(element) {
+          this.itemsRef.push(element)
+        }
+      },
+      clearSelected(divSelected){
+        setTimeout(() =>{
+          this.loadQuestion()
+        }, 1000)
+      },
+      onOptionClicked(choice, item){
+        if(this.canClick){
+          const divContainer = this.itemsRef[choice]
+          console.log(this.currentQuestion.correctAnswer)
+
+          if(this.currentQuestion.correctAnswer == choice){
+            this.score += 10
+          }else {
+
+          }
+          this.timer = 1
+          this.canClick = false
+          this.clearSelected(divContainer)
+        }else{
+          console.log("Can't select question")
+        }
+      },
+      countDownTimer(){
+        let countDown = setInterval(() => {
+          if (this.timer > 0) {
+            this.timer -= 0.1;
+          } else {
+            console.log('Time is up')
+            clearInterval(countDown)
+          }
+        }, 1500)
+      }
+    },
+
     mounted(){
-      this.loadQuestion()
-      this.countDownTimer()
-      this.fetchQuestionFromFirebaseFirestore()
+      let docRef =dbFApp.collection('QUIZ').doc(this.subjectsf[this.$route.params.id])
+      docRef.get().then((querySnapshot) => {
+        if (querySnapshot.exists) {
+            const newQuestions = querySnapshot.data().questions
+
+            newQuestions.map((serverQuestion) => {
+              const arrangedQuestion = {
+                question: serverQuestion.question,
+                choices: '',
+                answer: ''
+              };
+
+              const choices = serverQuestion.incorrectAnswer;
+
+              arrangedQuestion.answer = Math.floor(Math.random() * 4 + 1);
+
+              choices.splice(arrangedQuestion.answer - 1, 0, serverQuestion.correctAnswer)
+
+              arrangedQuestion.choices = choices;
+
+              return arrangedQuestion;
+            });
+            console.log('new questions ::',querySnapshot.id,newQuestions,)
+
+            this.questions = newQuestions;
+            this.loadQuestion()
+            this.countDownTimer()
+        } else {
+          console.log('No such a document')
+        }
+        }).catch((error) => {
+    console.log("Error getting document:", error);
+});
     },
   }
 </script>

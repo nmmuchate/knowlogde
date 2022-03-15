@@ -102,3 +102,79 @@ export default {
     background-color: red;
   }
 </style>
+
+
+
+Ver como os youtubers usam os dados do opentriva
+e criar algo identico
+
+https://www.youtube.com/watch?v=WrHx16_E7Ac
+
+
+<template>
+  <div >
+
+
+      <div class="bg-red" v-for=" subject in bal" :key="subject">
+
+        {{subject}}
+      </div>
+<q-btn @click="read()"></q-btn>
+  </div>
+</template>
+
+<script>
+  import { dbFApp, fbApp } from "../boot/firebase"
+
+  import { mapGetters } from 'vuex'
+
+  export default {
+  setup() {
+
+    let bal = []
+    const onOptionClicked = (choice, item) => {
+      console.log('subject clicked::',choice, item)
+    }
+
+    const fetchSubjectsFromFirebaseFirestore = () =>{
+      const
+    }
+
+
+    return{
+      fetchSubjectsFromFirebaseFirestore,
+      bal,
+      onOptionClicked,
+    }
+  },
+  computed: {
+    ...mapGetters('subjects', ['subjects']),
+  },
+  methods: {
+    // renaming(){
+    //   let n = 'CAT'
+    //   let w
+    //   for(let i = 0; i<= 10; i++){
+    //     this.w=n.replace(/[0-9]/, parseInt(n.match(/[0-9]/)) + i)
+    //     return this.cats = w
+    //   }
+    //   console.log(this.cats)
+    // }
+    read(){
+      console.log('subject',this.bal)
+    }
+
+  },
+  mounted(){
+    this.fetchSubjectsFromFirebaseFirestore()
+  }
+//   for(let i = 0; i<= 10; i++){
+//  this.w=this.n.replace(/[0-9]/, parseInt(this.n.match(/[0-9]/)) + i)
+//   console.log(this.w)
+// }
+}
+</script>
+
+<style>
+
+</style>

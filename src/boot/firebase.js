@@ -47,5 +47,6 @@ import 'firebase/firestore'
 
   export {
     dbAuth,
-    dbFApp
+    dbFApp,
+    fbApp
   }
