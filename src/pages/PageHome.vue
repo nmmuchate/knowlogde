@@ -1,7 +1,7 @@
 <template>
   <q-page>
     <div>
-      <h6 class="q-my-none q-pt-md q-mx-md">Preparação de exame</h6>
+      <h1 class='text-xl font-medium'>Prepara-te para o exame com nosso jogo</h1>
       <!-- <q-tabs
         v-model="tab"
         dense
@@ -11,30 +11,33 @@
         :key="key" :name="subject.name" :label="subject.name" />
       </q-tabs> -->
     </div>
-    <div class=" flex flex-center q-ma-md">
-      <q-item clickable>
-
-        <div class="row">
-          <div
-            v-for="(elements, key) in elemetnsInHome"
-            :key="key"
-            class="col-6 q-pa-md"
-          >
-            <div class="imgExam q-mb-md">
-              <q-card class="my-card" >
-                <q-img :src="elements.image"></q-img>
-                <q-card-actions>
-                  <q-btn
-                    :to="elements.path"
-                    class="text-center"
-                    no-caps
-                    flat>{{ elements.name }}</q-btn>
-                </q-card-actions>
-              </q-card>
-            </div>
-          </div>
-        </div>
-      </q-item>
+    <div class="">
+      <q-list>
+        <q-item clickable>
+          <div class='p-6 max-w-sm bg-green-100 rounded-lg border border-gray-200 shadow-md'>
+            <h5 class='mb-2 text-2xl font-bold tracking-tight text-gray-900'>Simplesmente desfrute do seu conhecimento</h5>
+            <p class='mb-3 font-normal text-gray-400'>
+              Aqui neste modo do jogo é onde poderá simplesmente colocar o seu conhecimento em pratica sem nenhuma pressão.</p>
+            <q-btn label="Experimente agora" to="/subjects" color="primary" icon-right="east"/>
+          </div>  
+        </q-item>
+        <q-item clickable>
+          <div class='p-6 max-w-sm bg-green-300 rounded-lg border border-gray-200 shadow-md'>
+            <h5 class='mb-2 text-2xl font-bold tracking-tight text-gray-900'>Teste o seu conhecimento sobre pressão</h5>
+            <p class='mb-3 font-normal text-gray-400'>
+              Para cada questão tem apenas 15 segundos para responder. Este exercicio poderá ser muito útil para estudar sobre pressão.</p>
+            <q-btn label="Experimente agora" to="/subjects" color="primary" icon-right="east"/>
+          </div>  
+        </q-item>
+        <q-item clickable>
+          <div class='p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md'>
+            <h5 class='mb-2 text-2xl font-bold tracking-tight text-gray-900'>Testemunhe o seu crescimento</h5>
+            <p class='mb-3 font-normal text-gray-400'>
+              Veja as suas pontuações que obtém. Também pode comparar com as outras pessoas.</p>
+            <q-btn label="Ver as pontuações" to="/ranking" color="primary" icon-right="east"/>
+          </div>  
+        </q-item>
+      </q-list>
      </div>
   </q-page>
 </template>
@@ -67,27 +70,7 @@ export default {
           path: '/ranking',
         }
       ],
-      // subjects: [
-      //   {
-
-      //   },
-      //   {
-      //     name: 'Matematica',
-      //     path: ''
-      //   },
-      //   {
-      //     name: 'Fisica',
-      //     path: ''
-      //   },
-      //   {
-      //     name: 'Quimica',
-      //     path: ''
-      //   },
-      //   {
-      //     name: 'Biologia',
-      //     path: ''
-      //   },
-      // ]
+      
     }
   },
   computed: {
@@ -97,10 +80,7 @@ export default {
 </script>
 
 <style>
-  img{
-    width: 50px;
-    height: 170px;
-  }
+ 
   .tabsD{
     font-family: 'jost', sans-serif;
     font-style: normal;

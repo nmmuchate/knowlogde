@@ -1,62 +1,63 @@
 <template>
-  <q-page class="bg-grey-3 full-width">
-
-    <!-- EndOfQuizOverLay -->
-    <end-of-quiz v-if="endfoquizovr"></end-of-quiz>
-
+  <q-page>
     <!-- quiz container -->
-    <div class="bg-white shadow-3 q-py-md q-px-lg rounded-borders container">
-      <!-- score container -->
-        <div class="text-grey-9">
-          <p class="q-ma-none">Score</p>
-          <p class="text-bold ">{{score}}V</p>
+        
+        <!-- quiz score container -->
+      <div class='relative z-20'>
+        <div class="text-gray-800 text-right">
+          <span class="font-medium">Pontuação:</span>
+          <span class="font-bold text-red-600"> 20</span>
         </div>
-      <!-- timer container -->
-      <div class="bg-white shadow-4 q-pa-xs rounded-borders">
-        <q-linear-progress rounded :value="timer" class="q-pa-xs"/>
-      </div>
 
-      <!-- question container -->
-      <div
-        class="neumorph-1 rounded-borders bg-grey-1 q-my-md text-center text-bold">
-        <div class="question bg-white q-pa-md">
-          {{ currentQuestion.question }}
+        <!-- quiz timer container -->
+        <div class="bg-white shadow-lg p-1 rounded-full w-full h-5 mt-4">
+          <div class="bg-blue-700 rounded-full w-11/12 h-full">       
+          </div>
         </div>
-      </div>
+        <!-- question container -->
+        <div class="rounded-lg bg-gray-100 p-2 .neumorph-1 text-center font-bold tex-gray-800 mt-8">
+          <div class="bg-white p-5">
+            Who is the most poweful Avenger?
+          </div>
+        </div>
 
-      <!-- options container -->
-      <div class="q-mt-xl">
-        <div
-          v-for="(choice, item) in currentQuestion.incorrectAnswer"
-          :key="item">
-          <div
-            class="neumorph-1 bg-grey-3 rounded-borders q-pa-xs q-my-sm"
-            @click="onOptionClicked(choice, item)"
-            :ref="optionChosen">
-            <div class="bg-white rounded-borders text-bold row">
-              <!-- option id -->
-              <div class="bg-grey-5 rounded-borders q-pa-sm">
-                {{ item }}
-              </div>
-              <!-- Option name -->
-              <div class="q-pa-sm">{{choice}}</div>
+        <!-- answers container -->
+        <div class='mt-8'>
+          
+          <!-- answer container -->
+          <div  class='neumorph-1 option-default bg-gray-100 p-2 rounded-lg mb-3 relative'>
+
+            <div class='bg-blue-500 p-1 transform rotate-45 rounded-md h-7 w-7 text-white font-bold absolute right-0 top-0 shadow-md'>
+              <p class='transform -rotate-45'>+1</p>
             </div>
+
+            <div class="bg-white rounded-lg font-bold flex p-2"> 
+              
+              <!-- answer ID -->
+
+              <div class="bg-gray-400 p-3 rounded-lg">A</div>
+
+              <!-- option text -->
+              <div class="flex items-center pl-6">Thor</div>
+            </div>        
+          </div>
+
+        </div>
+
+        <!-- progress indicator container -->
+        <div class='mt-8 text-center'>
+          <div class='h-1 w-12 rounded-full bg-gray-800 mx-auto'>
+            <p class='text-gray-800 font-bold'>1/3</p>
           </div>
         </div>
       </div>
 
-      <!-- progress indicator container -->
-      <div class="q-mt-lg text-center">
-        <div style="width:50px;height:2px;" class="rounded-borders bg-grey-7 q-mx-auto">
-          <p class="text-bold text-grey-7">{{ questionCounter }}/{{questions.length}}</p>
-        </div>
-      </div>
-    </div>
   </q-page>
 </template>
 
 <script>
   import { dbFApp } from '../boot/firebase'
+  // import '../index.css'
 
   import EndOfQuiz from 'src/components/Quiz/EndOfQuiz.vue'
   export default {
@@ -188,6 +189,6 @@
     box-shadow: 6px 6px 18px rgba(0, 0, 0, 0.09), -6px -6px 18px #ffffff;
   }
   .container{
-    border-radius: 25px;
+    max-width: 400px;
   }
 </style>

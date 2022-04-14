@@ -1,16 +1,5 @@
 /* app global css */
 .option-default{
-  cursor: pointer;
+  @apply cursor-pointer;
 }
-.option-default div:nth-child(1){
-  visibility: hidden;
-}
-.option-default div:nth-child(2) div:nth-child(1){
-  display: inline;
-  background-color: #bdbdbd;
-  color: #424242;
-}
-.option-default div:nth-child(2){
-  background-color: #ffffff;
-  color: #616161;
-}
+

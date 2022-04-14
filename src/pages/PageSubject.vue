@@ -5,6 +5,7 @@
         v-for="(subject, key) in subjects"
         :key="key"
         :to="'/exams/' + key"
+        class="q-pa-none"
         @click="optionchosen(key)"
         clickable
         v-ripple>
@@ -16,8 +17,9 @@
           </q-avatar>
         </q-item-section>
 
-        <q-item-section>{{ subject.NAME }}</q-item-section>
+        <q-item-section class='text-bold'>{{ subject.NAME }}</q-item-section>
         <!-- <q-item-section side>{{ subject.questions.length}} questões</q-item-section> -->
+        <q-separator inset spaced=""/>
       </q-item>
     </q-list>
   </q-page>

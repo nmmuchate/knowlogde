@@ -3,13 +3,16 @@ import { dbAuth } from 'src/boot/firebase'
 // import { uid } from 'quasar'
 
 const state = {
-  users: {},
+  userState: {},
 }
 
 const mutations = {
   addUser(state, payload){
     Vue.set(state.users, payload.id, payload.object)
-  }
+  },
+  setUserDetails(state, payload){
+    state.userState[payload.id].details = payload.details
+  }	
 }
 
 const actions = {
@@ -47,19 +50,23 @@ const actions = {
     })
   },
   handleAuthStateChanged({}, payload){
-    console.log('handleAuthStateChanged')
+    console.log('payload', payload)
     dbAuth.onAuthStateChanged(user => {
-      if (user) {
-        // User is logged in.
-        let userId = dbAuth.currentUser.uid
-        console.log('userID', userId)
-        this.$router.push('/home')
+      console.log('user', user)
+      if(user){
+        let userId = user.uid
+        let user = {
+          id: userId,
+          email: user.email,
+          name: user.displayName,
+          image: user.photoURL,
+          createAt: new Date(),
+          updateAt: new Date(),
+        }
+        commit('setUserDetails', user)
       }
-      else {
-        //User is logged out
-        this.$router.replace('/')
-      }
-    })
+    }
+    )
   },
   logoutUser(){
     dbAuth.signOut()
