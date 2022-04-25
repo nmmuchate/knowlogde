@@ -1,32 +1,101 @@
 <template>
-  <q-page class="h-screen m-auto container">
-    <div class="h-full ml-auto lg:w-6">
-      <div class="m-auto py-12 px-6 sm:p-20 xl:w-10/12">
-        <div class="space-y-4">
-          <p class="font-medium text-lg text-gray-600">Bem-vindo à Knowlodge</p>
+  <q-page>  
+      <div class=" ">
+    <div class=" e">
+        <div class="flex justify-center">
+             <img src="../assets/logo.svg" alt="" class="h-12">
         </div>
-        <div class="space-y-4">
-          <p class="text-gray-600">
-            A Knowlodge é uma plataforma de aprendizado online que permite aos usuários
-            acessar conteúdos de diversas áreas de conhecimento.
-          </p>
+        <h3 class="text-2xl font-bold text-center">Introduza a sua conta</h3>
+       
+
+
+        <q-form
+          @submit="onSubmit"
+          class="q-gutter-md"
+        >
+
+          <q-input
+            outlined
+            type="email"
+            v-model="formData.email"
+            label="mail@gmail.com"
+            hint="Introduza o seu Email"
+            lazy-rules
+            :rules="[val => !!val || 'Por favor, insira o seu email']"
+          />
+
+          <q-input
+            outlined
+            type="password"
+            v-model="formData.password"
+            label="senha"
+            hint="Introduza a sua senha"
+            lazy-rules
+            :rules="[val => !!val || 'Por favor, insira a sua senha']"
+          />
+
+
+         <q-toggle
+            v-model="formData.rememberMe"
+            label="Lembrar de mim mais tarde" />
+
+          <div class="flex items-baseline justify-between">
+            <q-btn
+              label="Entrar"
+              no-caps
+              type="submit"
+              class=""
+              color="primary" 
+            />
+            <q-btn
+              label="Esqueceu a senha?"
+              no-caps
+              flat
+              type="submit"
+              class="q-mt-sm"
+              color="primary" 
+            />
+          </div>
+        </q-form>
+
+        <div class="text-center pt-4">
+          <q-separator />
+          <q-btn
+            label="Criar uma conta"
+            no-caps
+            flat
+            color="primary" 
+            class="q-mt-sm"
+            @click="$router.push('/register')"
+          />
         </div>
-      </div>
+
     </div>
+  </div>
   </q-page>
 </template>
 
 <script>
+import { useQuasar } from 'quasar'
+import { mapActions } from "vuex";
+export default {
+  data () {
 
-// export default {
-//   name: 'PageIndex',
-//   data() {
-//     return {
-//       currentPath: 'login'
-//     }
-//   },
-//   components: {
-//     'form-component' : require('components/formComponent.vue').default
-//   }
-// }
+    return {
+      formData: {
+        email: '',
+        password: '',
+        rememberMe: false
+      },
+
+    }
+  },
+  methods:{
+    ...mapActions('auth', ['loginUser']),
+    onSubmit() {
+      this.loginUser(this.formData)
+    },
+  },
+  
+}
 </script>
