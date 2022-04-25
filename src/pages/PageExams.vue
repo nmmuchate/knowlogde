@@ -1,23 +1,24 @@
 <template>
   <q-page>
     <!-- quiz container -->
-        
+        <img src='../assets/abstract.svg' alt='' class='absolute -top-10 left-0 object-none'>
         <!-- quiz score container -->
       <div class='relative z-20'>
         <div class="text-gray-800 text-right">
           <span class="font-medium">Pontuação:</span>
-          <span class="font-bold text-red-600"> 20</span>
+          <span class="font-bold text-red-600">{{score}}</span>
         </div>
 
         <!-- quiz timer container -->
-        <div class="bg-white shadow-lg p-1 rounded-full w-full h-5 mt-4">
-          <div class="bg-blue-700 rounded-full w-11/12 h-full">       
-          </div>
+        <div class="bg-white shadow-lg p-1 rounded-full w-full h-3 mt-4">
+          
+          <q-linear-progress rounded :value="timer" class="q-pa-xs"/>
+   
         </div>
         <!-- question container -->
         <div class="rounded-lg bg-gray-100 p-2 .neumorph-1 text-center font-bold tex-gray-800 mt-8">
           <div class="bg-white p-5">
-            Who is the most poweful Avenger?
+            {{currentQuestion.question}}
           </div>
         </div>
 
@@ -25,29 +26,30 @@
         <div class='mt-8'>
           
           <!-- answer container -->
-          <div  class='neumorph-1 option-default bg-gray-100 p-2 rounded-lg mb-3 relative'>
+          <div  v-for='(choice, item) in currentQuestion.incorrectAnswer' :key='item' >
+            <div :ref="optionChosen" @click="onOptionClicked(choice, item)" class='neumorph-1 option-default bg-gray-100 p-2 rounded-lg mb-3 relative'>
 
-            <div class='bg-blue-500 p-1 transform rotate-45 rounded-md h-7 w-7 text-white font-bold absolute right-0 top-0 shadow-md'>
-              <p class='transform -rotate-45'>+1</p>
+              <div class='bg-blue-500 p-1 transform rotate-45 rounded-md h-7 w-7 text-white font-bold absolute right-0 top-0 shadow-md'>
+                <p class='transform -rotate-45'>+1</p>
+              </div>
+
+              <div class="rounded-lg font-bold flex p-2"> 
+                
+                <!-- answer ID -->
+
+                <div class="p-3 rounded-lg">{{item +1}}</div>
+
+                <!-- option text -->
+                <div class="flex items-center pl-6">{{choice}}</div>
+              </div>        
             </div>
-
-            <div class="bg-white rounded-lg font-bold flex p-2"> 
-              
-              <!-- answer ID -->
-
-              <div class="bg-gray-400 p-3 rounded-lg">A</div>
-
-              <!-- option text -->
-              <div class="flex items-center pl-6">Thor</div>
-            </div>        
           </div>
-
         </div>
 
         <!-- progress indicator container -->
         <div class='mt-8 text-center'>
           <div class='h-1 w-12 rounded-full bg-gray-800 mx-auto'>
-            <p class='text-gray-800 font-bold'>1/3</p>
+            <p class='text-gray-800 font-bold'>{{questionCounter}}/{{questions.length}}</p>
           </div>
         </div>
       </div>
@@ -67,7 +69,7 @@
         canClick: true,
         endfoquizovr: false,
         score: 0,
-        timer: 1,
+        timer: 100,
         questionCounter:0,
         questions: [],
         currentQuestion: {
@@ -114,18 +116,26 @@
       },
       clearSelected(divSelected){
         setTimeout(() =>{
+          if(divSelected) {
+            divSelected.classList.remove('option-correct')
+            divSelected.classList.remove('option-wrong')
+            divSelected.classList.add('option-default')
+          } 
           this.loadQuestion()
         }, 1000)
       },
       onOptionClicked(choice, item){
         if(this.canClick){
-          const divContainer = this.itemsRef[choice]
-          console.log(this.currentQuestion.correctAnswer)
+          const divContainer = this.itemsRef[item]
 
           if(this.currentQuestion.correctAnswer == choice){
-            this.score += 10
+            this.score ++
+            divContainer.classList.add('option-correct')
+            divContainer.classList.remove('option-default')
+            
           }else {
-
+            divContainer.classList.add('option-wrong')
+            divContainer.classList.remove('option-default')
           }
           this.timer = 1
           this.canClick = false
@@ -143,7 +153,22 @@
             clearInterval(countDown)
           }
         }, 1500)
-      }
+      },
+      // ifUserPassed(){
+      //   if(this.score >= this.questions.length * 0.7){
+      //     return true
+      //   }else {
+      //     return false
+      //   }
+      // },
+      // setUserScore(){
+      //   if(this.ifUserPassed()){
+      //     dbFApp.collection('users').doc(this.$store.state.user.uid).update({
+      //       score: this.score
+      //     })
+      //   }
+      // }  
+      
     },
 
     mounted(){
@@ -157,7 +182,7 @@
                 question: serverQuestion.question,
                 choices: '',
                 answer: ''
-              };
+              };              
 
               const choices = serverQuestion.incorrectAnswer;
 
@@ -169,8 +194,8 @@
 
               return arrangedQuestion;
             });
-            console.log('new questions ::',querySnapshot.id,newQuestions,)
-
+            // console.log('new questions ::' , newQuestions.sort(() => Math.random() - 0.5))
+            newQuestions.sort(() => Math.random() - 0.5)
             this.questions = newQuestions;
             this.loadQuestion()
             this.countDownTimer()
