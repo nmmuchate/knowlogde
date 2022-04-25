@@ -2,18 +2,10 @@
   <q-page>
     <div>
       <h1 class='text-xl font-medium'>Prepara-te para o exame com nosso jogo</h1>
-      <!-- <q-tabs
-        v-model="tab"
-        dense
-        class="text-black shadow-0 tabsD"
-      > -->
-        <!-- <q-tab v-for="(subject,key) in subjects"
-        :key="key" :name="subject.name" :label="subject.name" />
-      </q-tabs> -->
     </div>
     <div class="">
       <q-list>
-        <q-item clickable>
+        <q-item>
           <div class='p-6 max-w-sm bg-green-100 rounded-lg border border-gray-200 shadow-md'>
             <h5 class='mb-2 text-2xl font-bold tracking-tight text-gray-900'>Simplesmente desfrute do seu conhecimento</h5>
             <p class='mb-3 font-normal text-gray-400'>
