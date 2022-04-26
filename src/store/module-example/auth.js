@@ -1,3 +1,4 @@
+import { Loading } from 'quasar'
 import { dbAuth, dbFApp } from 'src/boot/firebase'
 // import Vue from 'vue'
 // import { uid } from 'quasar'
@@ -64,6 +65,7 @@ const actions = {
   },
 
   loginUser({commit}, payload){
+    Loading.show()
     dbAuth.signInWithEmailAndPassword(payload.email, payload.password)
       .then(response => {
         console.log('response', response)
@@ -75,8 +77,10 @@ const actions = {
         })
 
         this.$router.push('/home')
+        Loading.hide()
       })
       .catch(error => {
+        Loading.hide()
         console.log(error.message)
       })
   },

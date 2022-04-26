@@ -58,6 +58,9 @@
 </template>
 
 <script>
+
+  import { Loading } from 'quasar'
+
   import { dbFApp } from '../boot/firebase'
   // import '../index.css'
 
@@ -172,6 +175,9 @@
     },
 
     mounted(){
+      Loading.show({
+        message: 'Carregando as questões...'
+      })
       let docRef =dbFApp.collection('QUIZ').doc(this.subjectsf[this.$route.params.id])
       docRef.get().then((querySnapshot) => {
         if (querySnapshot.exists) {
@@ -198,6 +204,7 @@
             newQuestions.sort(() => Math.random() - 0.5)
             this.questions = newQuestions;
             this.loadQuestion()
+            Loading.hide()
             this.countDownTimer()
         } else {
           console.log('No such a document')
