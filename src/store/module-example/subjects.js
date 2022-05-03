@@ -1,38 +1,45 @@
-import { dbFApp } from "../../boot/firebase"
+// import { dbFApp } from "../../boot/firebase"
 
-const state = {
-  subjects: {},
-}
+// const state = {
+//   subjects: {},
+// }
 
-const mutations = {
-  addCategories(state, payload) {
-    Vue.set(state.subjects, payload.name)
-  }
-}
+// const mutations = {
+//   addCategories(state, payload) {
 
-const actions = {
-  readSubjects({commit}){
-    const fetchSubjectsFromFirebaseFirestore = async () => {
-      const snapshot = await dbFApp.collection('QUIZ').get();
-      snapshot.docs.forEach((doc) => {
-        console.log
-      })
-    }
-  }
-}
+//     console.log('paload', payload)
 
-const getters = {
-  subjects: (state) => {
-    console.log(state.subjects)
-    return state.subjects
-  },
+//    state.subjects = payload
+//   }
+// }
 
-}
+// const actions = {
+//   readSubjects({commit},){
+//     dbFApp.collection('QUIZ').get().then((querySnapshot) => {
+//       querySnapshot.forEach((doc) => {
 
-export default {
-  namespaced: true,
-  state,
-  mutations,
-  getters,
-  actions
-}
+//         let subject = []
+
+//         subject.push(doc.data())
+
+//         commit('addCategories', subject.name)
+//       })
+//     })
+//   }
+// }
+
+// const getters = {
+//   getSubjects: (state) => {
+//     console.log( 'subject from to state::',state.subjects)
+//     return state.subjects
+//   },
+
+// }
+
+// export default {
+//   namespaced: true,
+//   state,
+//   mutations,
+//   getters,
+//   actions
+// }
