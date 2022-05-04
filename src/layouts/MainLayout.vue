@@ -2,19 +2,29 @@
   <q-layout view="lHh Lpr lFf">
     <main class="flex h-screen justify-center">
       <div  class='bg-white overflow-hidden flex-none relative container shadow-lg rounded-lg px-8 py-6'>
-        <!-- <img src='../assets/abstract.svg' alt='' class='absolute -top-10 left-0 object-none'> -->
+         
         <!-- header for all page -->
 
-        <div class='flex z-50 relative justify-between items-center mb-6'>
-          <div class='row items-center'>
+        <!-- <div v-if="showHeader" class='flex z-50 relative justify-between items-center mb-6'>
+          <div  class='row items-center'>
             <h1 class='text-2xl font-medium'>Olá, <br>Nicolas</h1>
 
           </div>
           <div class='absolute top-0 right-0 h-16 w-16 items-center'>
-
-            <img src='../assets/avatar.svg' alt='' class='w-12 h-12 rounded-full ml-4'>
+            
+            <q-btn
+              flat
+              color="primary"
+              label="Sair"
+              @click="logoutUser"
+              />
+            <q-btn to='/settings' class='w-12 h-12 rounded-full ml-4' round>
+              <q-avatar size="48px">
+                <img src='../assets/avatar.svg' alt='' >
+              </q-avatar>
+            </q-btn>
           </div>
-        </div>
+        </div> -->
 
         <q-page-container>
           <router-view />
@@ -25,6 +35,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: 'MainLayout',
   data () {
@@ -80,6 +92,10 @@ export default {
         return this.isShowedHeader
       }
     }
+  },
+  methods: {
+    ...mapActions('auth',['logoutUser']),
+    
   }
 }
 </script>

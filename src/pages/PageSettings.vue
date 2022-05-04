@@ -1,71 +1,54 @@
 <template>
     <q-page>
-      <div class="picUpdate row">
-        <div class="col-8">
-          <q-item>
-            <q-item-section avatar>
-              <q-avatar>
-                <img src="https://scontent.fmpm4-1.fna.fbcdn.net/v/t1.6435-9/96734858_2671339216481401_3707348828546924544_n.jpg?_nc_cat=110&ccb=1-5&_nc_sid=8bfeb9&_nc_ohc=BbQlaMc7hxIAX8vEjuW&_nc_ht=scontent.fmpm4-1.fna&oh=3886711320ec9f25752e65b2a70b848d&oe=61737F6B">
-              </q-avatar>
-            </q-item-section>
-
-            <q-item-section>
-              <q-item-label>Ester Da Graça</q-item-label>
-              <q-item-label caption>Estelinha</q-item-label>
-            </q-item-section>
-          </q-item>
-        </div>
-        <div class="col-4 row items-end justify-end q-pa-sm q-pr-lg">
-          <q-btn
-            no-caps
-            color="indigo-5"
-            text-color="white"
-            label="Editar "
+      <div class="mb-6 bg-indigo-5">
+        <!-- button editar -->
+        <q-btn
+          no-caps 
+          class="absolute top-0 right-0"
+          color="primary"
+          label="Editar"
+          @click="editUser"
           />
-        </div>
       </div>
-      <div class="updateDatas bg-grey-5 q-ma-md q-mr-lg">
-        <div class="name">
-          <q-item>
-            <q-item-section>
-              <q-item-label caption>Nome</q-item-label>
-              <q-item-label>Ester Da Graça</q-item-label>
-            </q-item-section>
-          </q-item>
-        </div>
-        <div class="name">
-          <q-item>
-            <q-item-section>
-              <q-item-label caption>Username</q-item-label>
-              <q-item-label>Estelinha</q-item-label>
-            </q-item-section>
-          </q-item>
-        </div>
-        <div class="name">
-          <q-item>
-            <q-item-section>
-              <q-item-label caption>Email</q-item-label>
-              <q-item-label>esterdagraca@gmail.com</q-item-label>
-            </q-item-section>
-          </q-item>
-        </div>
-        <div class="name">
-          <q-item>
-            <q-item-section>
-              <q-item-label caption>Password</q-item-label>
-              <q-item-label>************</q-item-label>
-            </q-item-section>
-          </q-item>
-        </div>
+      <div class="flex flex-col items-center mt-6">
+            <q-avatar size="78px">
+                <img src='../assets/avatar.svg' alt='' >
+            </q-avatar>
+            <h5 class="my-6 text-xl font-medium text-gray-900"> Nicolas Muchate </h5>
       </div>
-      <!-- <div class="subscription"></div> -->
 
+
+      <div class="flex my-4 items-baseline justify-between">
+        <!-- container about user information : name email password-->
+        <p class="text-gray-900 text-lg font-bold">Nome</p>
+        <p class="text-gray-800 text-lg font-medium">Nicolas Muchate</p>
+        
+      </div>
+
+      <div class="flex my-4 items-baseline justify-between">
+        <p class="text-gray-900 text-lg font-bold">Email</p>
+        <p class="text-gray-800 text-lg font-medium">nicolas.muchate@gmail.com</p>
+      </div>
+
+      <div class="flex my-4 items-baseline justify-between">
+        <p class="text-gray-900 text-lg font-bold">Senha</p>
+        <p class="text-gray-800 text-lg font-medium">********</p>
+      </div>
     </q-page>
 </template>
 
 <script>
 export default {
+  data(){
+    return {
 
+    }
+  },
+  methods:{
+    editUser(){
+      this.$router.push('/editProfile')
+    }
+  }
 }
 </script>
 

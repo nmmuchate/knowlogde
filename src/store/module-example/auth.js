@@ -12,7 +12,8 @@ const mutations = {
     state.userState = payload
   },
   setUserDetails(state, payload){
-    console.log('setUserDetails', state.userState = payload)
+    console.log('setUserDetails', payload)
+    state.userState = payload
   }	
 }
 
@@ -87,13 +88,21 @@ const actions = {
   handleAuthStateChanged({ commit }, payload){
     console.log('payload', payload)
     dbAuth.onAuthStateChanged(user => {
+      console.log('user', user)
       if (user) {
-        console.log('user', user)
-        // set user to local storage
-        commit('setUserDetails', {
-          id: user.uid,
-          email: user.email,
+        // Call current user from dbFapp.
+        dbFApp.collection('users').doc(user.uid).get().then(res => {
+          console.log('res', res.data())
+          commit('setUserDetails', res.data())
         })
+
+        // set user to local storage
+        // commit('setUserDetails', {
+        //   id: user.uid,
+        //   name: user.name,
+        //   email: user.email,
+        //   photoURL: user.photoURL,
+        // })
 
         this.$router.push('/home')
       } else {
