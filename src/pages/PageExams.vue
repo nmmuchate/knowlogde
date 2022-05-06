@@ -1,199 +1,218 @@
 <template>
-  <q-page class="bg-grey-3 full-width">
-
-    <!-- EndOfQuizOverLay -->
-    <end-of-quiz v-if="endfoquizovr"></end-of-quiz>
-
+  <q-page>
     <!-- quiz container -->
-    <div class="bg-white shadow-3 q-py-md q-px-lg rounded-borders container">
-      <!-- score container -->
-        <div class="text-grey-9">
-          <p class="q-ma-none">Score</p>
-          <p class="text-bold ">{{score}}V</p>
+        <img src='../assets/abstract.svg' alt='' class='absolute -top-10 left-0 object-none'>
+        <!-- quiz score container -->
+      <div class='relative z-20'>
+        <div class="text-gray-800 text-right">
+          <span class="font-medium">Pontuação:</span>
+          <span class="font-bold text-red-600">{{score}}</span>
         </div>
-      <!-- timer container -->
-      <div class="bg-white shadow-4 q-pa-xs rounded-borders">
-        <q-linear-progress rounded :value="timer" class="q-pa-xs"/>
-      </div>
 
-      <!-- question container -->
-      <div class="neumorph-1 rounded-borders bg-grey-1 q-my-md text-center text-bold">
-        <div class="question bg-white q-pa-md">
-          {{ currentQuestion.question }}
+        <!-- quiz timer container -->
+        <div class="bg-white shadow-lg p-1 rounded-full w-full h-3 mt-4">
+          
+          <q-linear-progress rounded :value="timer" class="q-pa-xs"/>
+   
         </div>
-      </div>
+        <!-- question container -->
+        <div class="rounded-lg bg-gray-100 p-2 .neumorph-1 text-center font-bold tex-gray-800 mt-8">
+          <div class="bg-white p-5">
+            {{currentQuestion.question}}
+          </div>
+        </div>
 
-      <!-- options container -->
-      <div class="q-mt-xl">
-        <div v-for="(choice, item) in currentQuestion.choices" :key="item">
-          <div class="neumorph-1 bg-grey-3 rounded-borders q-pa-xs q-my-sm" @click="onOptionClicked(choice, item)" :ref="optionChosen">
-            <div class="bg-white rounded-borders text-bold row">
-              <!-- option id -->
-              <div class="bg-grey-5 rounded-borders q-pa-sm">
-                {{ item }}
+        <!-- answers container -->
+        <div class='mt-8'>
+          
+          <!-- answer container -->
+          <div  v-for='(choice, item) in currentQuestion.incorrectAnswer' :key='item' >
+            <div :ref="optionChosen" @click="onOptionClicked(choice, item)" class='neumorph-1 option-default bg-gray-100 p-2 rounded-lg mb-3 relative'>
+
+              <div class='bg-blue-500 p-1 transform rotate-45 rounded-md h-7 w-7 text-white font-bold absolute right-0 top-0 shadow-md'>
+                <p class='transform -rotate-45'>+1</p>
               </div>
-              <!-- Option name -->
-              <div class="q-pa-sm">{{choice.choice}}</div>
+
+              <div class="rounded-lg font-bold flex p-2"> 
+                
+                <!-- answer ID -->
+
+                <div class="p-3 rounded-lg">{{item +1}}</div>
+
+                <!-- option text -->
+                <div class="flex items-center pl-6">{{choice}}</div>
+              </div>        
             </div>
+          </div>
+        </div>
+
+        <!-- progress indicator container -->
+        <div class='mt-8 text-center'>
+          <div class='h-1 w-12 rounded-full bg-gray-800 mx-auto'>
+            <p class='text-gray-800 font-bold'>{{questionCounter}}/{{questions.length}}</p>
           </div>
         </div>
       </div>
 
-      <!-- progress indicator container -->
-      <div class="q-mt-lg text-center">
-        <div style="width:50px;height:2px;" class="rounded-borders bg-grey-7 q-mx-auto">
-          <p class="text-bold text-grey-7">{{ questionCounter }}/{{questions.length}}</p>
-        </div>
-      </div>
-    </div>
   </q-page>
 </template>
 
 <script>
-  import { ref } from "vue";
+
+  import { Loading } from 'quasar'
+
+  import { dbFApp } from '../boot/firebase'
+  // import '../index.css'
+
   import EndOfQuiz from 'src/components/Quiz/EndOfQuiz.vue'
   export default {
     data(){
-      let canClick = true
 
-      let endfoquizovr = ref(false)
-
-      let score = ref(0)
-
-      let timer = ref(1)
-
-      let questionCounter = ref(0)
-      const currentQuestion = ref({
-        question: '',
-        answer: 1,
-        choices: []
-      })
-      const questions=[
-          {
-            question: 'Inside which HTML element do we put the JavaScript??',
-            answer: 4,
-            choices:[
-              {choice: '<script>'},
-              {choice: 'hnfjdfdlifb'},
-              {choice: '<javascript>'},
-              {choice: '<js>'},
-              {choice: '<scripting>'},
-            ]
-          },
-          {
-            question: 'Calcula a massa do sol?',
-            answer:3,
-            choices:[
-              {choice: '5453165'},
-              {choice: '52561'},
-              {choice: '15189'},
-              {choice: '546543'},
-              {choice: '231256456'},
-            ]
-          },
-          {
-            question: 'Some question dumb?',
-            answer:2,
-            choices:[
-              {choice: 'Baka'},
-              {choice: 'Bakaero'},
-              {choice: 'ADFDSfdsfjdskfjkd'},
-              {choice: 'Badjia'},
-              {choice: 'Cara de Badjia'},
-            ]
-          },
-        ]
-
-        // lifecycle hooks
-      const loadQuestion = () => {
-        canClick = true
-        // Check if there are more questions to load
-        if(questions.length > questionCounter.value){
-          timer.value = 1
-
-          currentQuestion.value = questions[questionCounter.value]
-
-          questionCounter.value++
-        }else{
-          // no more questions
-          endfoquizovr.value = true
-          console.log('Out of Questions')
-        }
-      }
-      // Methods/functions
-      let itemsRef=[]
-      const optionChosen = element => {
-        if(element){
-          itemsRef.push(element)
-        }
-      }
-
-      const clearSelected = divSelected => {
-        setTimeout(() => {
-          // divSelected.classList.remove('option-correct')
-          // divSelected.classList.remove('option-wrong')
-          // divSelected.classList.add('option-default')
-          loadQuestion()
-        }, 1000)
-      }
-
-      const onOptionClicked = (choice, item) => {
-
-        if(canClick){
-          // TODO select an option
-          const divContainer = itemsRef[item]
-          const optionID = item+1
-          if(currentQuestion.value.answer == optionID){
-            // divContainer.classList.add('option-correct')
-            // divContainer.classList.add('option-wrong')
-            // divContainer.classList.remove('option-default')
-            score.value += 10
-          }else{
-            // divContainer.classList.add('option-wrong')
-            // divContainer.classList.add('option-correct')
-            // divContainer.classList.remove('option-default')
-          }
-          timer.value = 1
-          canClick = false
-          // TODO: go to next question
-          clearSelected(divContainer);
-        }else{
-          // can't select option
-          console.log('cant select question')
-        }
-
-      }
-
-      const countDownTimer = () =>{
-        let countDown = setInterval(() => {
-          if(timer.value > 0){
-            timer.value-=0.1;
-          }else{
-            console.log('time is up');
-            clearInterval(countDown)
-          }
-        }, 1500)
-      }
       return{
-        countDownTimer,
-        timer,
-        currentQuestion,
-        questions,
-        score,
-        questionCounter,
-        loadQuestion,
-        onOptionClicked,
-        optionChosen,
-        endfoquizovr
+        canClick: true,
+        endfoquizovr: false,
+        score: 0,
+        timer: 100,
+        questionCounter:0,
+        questions: [],
+        currentQuestion: {
+          question: '',
+          correctAnswer: '',
+          incorrectAnswer: []
+        },
+        itemsRef: [],
+        subjectsf: [
+          'CAT1',
+          'CAT10',
+          'CAT2',
+          'CAT3',
+          'CAT4',
+          'CAT5',
+          'CAT6',
+          'CAT7',
+          'CAT8',
+          'CAT9',
+        ]
       }
     },
     components:{
       EndOfQuiz
     },
+    methods: {
+      loadQuestion(){
+        this.canClick = true
+        if (this.questions.length > this.questionCounter) {
+          this.timer = 1
+
+          this.currentQuestion = this.questions[this.questionCounter]
+
+          this.questionCounter++
+        }else {
+          this.endfoquizovr = true
+          console.log('Out of Questions')
+        }
+      },
+      optionChosen(element){
+        if(element) {
+          this.itemsRef.push(element)
+        }
+      },
+      clearSelected(divSelected){
+        setTimeout(() =>{
+          if(divSelected) {
+            divSelected.classList.remove('option-correct')
+            divSelected.classList.remove('option-wrong')
+            divSelected.classList.add('option-default')
+          } 
+          this.loadQuestion()
+        }, 1000)
+      },
+      onOptionClicked(choice, item){
+        if(this.canClick){
+          const divContainer = this.itemsRef[item]
+
+          if(this.currentQuestion.correctAnswer == choice){
+            this.score ++
+            divContainer.classList.add('option-correct')
+            divContainer.classList.remove('option-default')
+            
+          }else {
+            divContainer.classList.add('option-wrong')
+            divContainer.classList.remove('option-default')
+          }
+          this.timer = 1
+          this.canClick = false
+          this.clearSelected(divContainer)
+        }else{
+          console.log("Can't select question")
+        }
+      },
+      countDownTimer(){
+        let countDown = setInterval(() => {
+          if (this.timer > 0) {
+            this.timer -= 0.1;
+          } else {
+            console.log('Time is up')
+            clearInterval(countDown)
+          }
+        }, 1500)
+      },
+      // ifUserPassed(){
+      //   if(this.score >= this.questions.length * 0.7){
+      //     return true
+      //   }else {
+      //     return false
+      //   }
+      // },
+      // setUserScore(){
+      //   if(this.ifUserPassed()){
+      //     dbFApp.collection('users').doc(this.$store.state.user.uid).update({
+      //       score: this.score
+      //     })
+      //   }
+      // }  
+      
+    },
+
     mounted(){
-      this.loadQuestion()
-      this.countDownTimer()
-    }
+      Loading.show({
+        message: 'Carregando as questões...'
+      })
+      let docRef =dbFApp.collection('QUIZ').doc(this.subjectsf[this.$route.params.id])
+      docRef.get().then((querySnapshot) => {
+        if (querySnapshot.exists) {
+            const newQuestions = querySnapshot.data().questions
+
+            newQuestions.map((serverQuestion) => {
+              const arrangedQuestion = {
+                question: serverQuestion.question,
+                choices: '',
+                answer: ''
+              };              
+
+              const choices = serverQuestion.incorrectAnswer;
+
+              arrangedQuestion.answer = Math.floor(Math.random() * 4 + 1);
+
+              choices.splice(arrangedQuestion.answer - 1, 0, serverQuestion.correctAnswer)
+
+              arrangedQuestion.choices = choices;
+
+              return arrangedQuestion;
+            });
+            // console.log('new questions ::' , newQuestions.sort(() => Math.random() - 0.5))
+            newQuestions.sort(() => Math.random() - 0.5)
+            this.questions = newQuestions;
+            this.loadQuestion()
+            Loading.hide()
+            this.countDownTimer()
+        } else {
+          console.log('No such a document')
+        }
+        }).catch((error) => {
+    console.log("Error getting document:", error);
+});
+    },
   }
 </script>
 
@@ -202,6 +221,6 @@
     box-shadow: 6px 6px 18px rgba(0, 0, 0, 0.09), -6px -6px 18px #ffffff;
   }
   .container{
-    border-radius: 25px;
+    max-width: 400px;
   }
 </style>

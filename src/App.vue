@@ -11,7 +11,7 @@ export default defineComponent({
   methods: {
     ...mapActions('auth', ['handleAuthStateChanged'])
   },
-  mounted() {
+  created() {
     this.handleAuthStateChanged()
   }
 })

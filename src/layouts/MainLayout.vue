@@ -1,67 +1,42 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header
-      v-if="showHeader"
-      reveal
-      class="bg-white text-black">
-        <div class="q-pa-md">
-            <q-toolbar>
-              <q-btn
-                flat
-                dense
-                round
-                icon="more_horiz"
-                aria-label="Menu"
-                @click="leftDrawerOpen = !leftDrawerOpen"
+    <main class="flex h-screen justify-center">
+      <div  class='bg-white overflow-hidden flex-none relative container shadow-lg rounded-lg px-8 py-6'>
+         
+        <!-- header for all page -->
+
+        <!-- <div v-if="showHeader" class='flex z-50 relative justify-between items-center mb-6'>
+          <div  class='row items-center'>
+            <h1 class='text-2xl font-medium'>Olá, <br>Nicolas</h1>
+
+          </div>
+          <div class='absolute top-0 right-0 h-16 w-16 items-center'>
+            
+            <q-btn
+              flat
+              color="primary"
+              label="Sair"
+              @click="logoutUser"
               />
-              <q-toolbar-title>
-               <strong>{{ title }}</strong>
-              </q-toolbar-title>
-              <q-btn class="" round>
-                <q-avatar size="42px">
-                  <img src="https://scontent.fmpm4-1.fna.fbcdn.net/v/t1.6435-9/96734858_2671339216481401_3707348828546924544_n.jpg?_nc_cat=110&ccb=1-5&_nc_sid=8bfeb9&_nc_ohc=BbQlaMc7hxIAX8vEjuW&_nc_ht=scontent.fmpm4-1.fna&oh=3886711320ec9f25752e65b2a70b848d&oe=61737F6B">
-                </q-avatar>
-              </q-btn>
-            </q-toolbar>
-        </div>
-    </q-header>
+            <q-btn to='/settings' class='w-12 h-12 rounded-full ml-4' round>
+              <q-avatar size="48px">
+                <img src='../assets/avatar.svg' alt='' >
+              </q-avatar>
+            </q-btn>
+          </div>
+        </div> -->
 
-    <q-drawer
-      v-if="showHeader"
-      v-model="leftDrawerOpen"
-      side="left"
-      behavior="mobile"
-      bordered
-    >
-      <q-list dark>
-        <q-item-label header>Navigation</q-item-label>
-
-        <q-item
-          v-for="nav in navs"
-          :key="nav.label"
-          :to="nav.to"
-          class="text-grey-10"
-          exact
-          clickable>
-            <q-item-section avatar>
-              <q-icon :name="nav.icon" />
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>{{ nav.label }}</q-item-label>
-            </q-item-section>
-        </q-item>
-
-      </q-list>
-    </q-drawer>
-
-    <q-page-container>
-      <router-view />
-    </q-page-container>
-
+        <q-page-container>
+          <router-view />
+        </q-page-container>
+      </div>
+    </main>
   </q-layout>
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: 'MainLayout',
   data () {
@@ -101,7 +76,7 @@ export default {
         return this.isShowedHeader
       }
       else if (currentPath == '/home') {
-        this.title = ''
+        this.title = 'Knowlodge'
         return this.isShowedHeader
       }
       else if (currentPath == '/ranking') {
@@ -117,8 +92,15 @@ export default {
         return this.isShowedHeader
       }
     }
+  },
+  methods: {
+    ...mapActions('auth',['logoutUser']),
+    
   }
 }
 </script>
 <style>
+.container{
+  max-width: 400px;
+}
 </style>

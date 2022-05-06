@@ -1,45 +1,45 @@
-import { dbFApp } from "../../boot/firebase"
+// import { dbFApp } from "../../boot/firebase"
 
-let subjectsActionsTemporary
+// const state = {
+//   subjects: {},
+// }
 
-const state = {
-  subjects: {}
-}
+// const mutations = {
+//   addCategories(state, payload) {
 
-const mutations = {
-  addCategories(state, payload) {
-    Vue.set(state.subjects, payload.name)
-  }
-}
+//     console.log('paload', payload)
 
-const actions = {
-  // readSubjects({commit}){
+//    state.subjects = payload
+//   }
+// }
 
-  //   let docRef = dbFApp.collection('QUIZ').doc('Categorias');
-  //   docRef.get().then((doc) => {
-  //     if (doc.exists) {
-  //       console.log('dados::',doc.data())
-  //       doc.data()
-  //     }else {
-  //       console.log('Es um perdedor')
-  //     }
-  //   }).catch((error) => {
-  //     console.log('error no servidor::', error)
-  //   })
-  // }
-}
+// const actions = {
+//   readSubjects({commit},){
+//     dbFApp.collection('QUIZ').get().then((querySnapshot) => {
+//       querySnapshot.forEach((doc) => {
 
-const getters = {
-  subjects: (state) => {
-    console.log(state.subjects)
-    return state.subjects
-  }
-}
+//         let subject = []
 
-export default {
-  namespaced: true,
-  state,
-  mutations,
-  getters,
-  actions
-}
+//         subject.push(doc.data())
+
+//         commit('addCategories', subject.name)
+//       })
+//     })
+//   }
+// }
+
+// const getters = {
+//   getSubjects: (state) => {
+//     console.log( 'subject from to state::',state.subjects)
+//     return state.subjects
+//   },
+
+// }
+
+// export default {
+//   namespaced: true,
+//   state,
+//   mutations,
+//   getters,
+//   actions
+// }

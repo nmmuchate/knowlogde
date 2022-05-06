@@ -1,139 +1,69 @@
 <template>
-  <div>
-    <q-list  v-for="subject in bear" :key="subject">
-      <q-item clickable v-ripple>
-        <q-item-section avatar>
-          <q-avatar color="indigo" text-color="white">
-            {{ subject.CAT1.charAt(0) }}
-          </q-avatar>
-        </q-item-section>
-        <q-item-section>{{subject.CAT1}}</q-item-section>
-        <q-item-section side>+99 questões</q-item-section>
-      </q-item>
-      <q-item  clickable v-ripple>
-        <q-item-section avatar>
-          <q-avatar color="indigo" text-color="white">
-            {{ subject.CAT2.charAt(0) }}
-          </q-avatar>
-        </q-item-section>
-        <q-item-section>{{subject.CAT2}}</q-item-section>
-        <q-item-section side>+99 questões</q-item-section>
-      </q-item>
-      <q-item  clickable v-ripple>
-        <q-item-section avatar>
-          <q-avatar color="indigo" text-color="white">
-            {{ subject.CAT3.charAt(0) }}
-          </q-avatar>
-        </q-item-section>
-        <q-item-section>{{subject.CAT3}}</q-item-section>
-        <q-item-section side>+99 questões</q-item-section>
-      </q-item>
-      <q-item  clickable v-ripple>
-        <q-item-section avatar>
-          <q-avatar color="indigo" text-color="white">
-            {{ subject.CAT4.charAt(0) }}
-          </q-avatar>
-        </q-item-section>
-        <q-item-section>{{subject.CAT4}}</q-item-section>
-        <q-item-section side>+99 questões</q-item-section>
-      </q-item><q-item  clickable v-ripple>
-        <q-item-section avatar>
-          <q-avatar color="indigo" text-color="white">
-            {{ subject.CAT5.charAt(0) }}
-          </q-avatar>
-        </q-item-section>
-        <q-item-section>{{subject.CAT5}}</q-item-section>
-        <q-item-section side>+99 questões</q-item-section>
-      </q-item><q-item  clickable v-ripple>
-        <q-item-section avatar>
-          <q-avatar color="indigo" text-color="white">
-            {{ subject.CAT6.charAt(0) }}
-          </q-avatar>
-        </q-item-section>
-        <q-item-section>{{subject.CAT6}}</q-item-section>
-        <q-item-section side>+99 questões</q-item-section>
-      </q-item><q-item  clickable v-ripple>
-        <q-item-section avatar>
-          <q-avatar color="indigo" text-color="white">
-            {{ subject.CAT7.charAt(0) }}
-          </q-avatar>
-        </q-item-section>
-        <q-item-section>{{subject.CAT7}}</q-item-section>
-        <q-item-section side>+99 questões</q-item-section>
-      </q-item><q-item  clickable v-ripple>
-        <q-item-section avatar>
-          <q-avatar color="indigo" text-color="white">
-            {{ subject.CAT8.charAt(0) }}
-          </q-avatar>
-        </q-item-section>
-        <q-item-section>{{subject.CAT8}}</q-item-section>
-        <q-item-section side>+99 questões</q-item-section>
-      </q-item>
-      <q-item  clickable v-ripple>
-        <q-item-section avatar>
-          <q-avatar color="indigo" text-color="white">
-            {{ subject.CAT9.charAt(0) }}
-          </q-avatar>
-        </q-item-section>
-        <q-item-section>{{subject.CAT9}}</q-item-section>
-        <q-item-section side>+99 questões</q-item-section>
-      </q-item>
-      <q-item  clickable v-ripple>
-        <q-item-section avatar>
-          <q-avatar color="indigo" text-color="white">
-            {{ subject.CAT10.charAt(0) }}
-          </q-avatar>
-        </q-item-section>
-        <q-item-section>{{subject.CAT10}}</q-item-section>
-        <q-item-section side>+99 questões</q-item-section>
-      </q-item>
-    </q-list>
-  </div>
+  <q-page>
+    <div class="mb-4">
+
+      <h5 class="text-xl font-bold leading-none text-gray-900">As disciplinas de preparação</h5>
+    </div>
+    <div class="flow-root">
+      <ul role="list" class="divide-y divide-gray-200">
+        <li v-for="(subject, key) in subjects" :key="key" class="py-3">
+          <!-- past a path exams/ with a div -->
+          <router-link :to="'/exams/' + key" class="flex items-center">
+            <div class="cursor-pointer flex items-center space-x-4">
+              <div class="flex-shrink-0">
+                <q-avatar
+                  color="primary"
+                  text-color="white">
+                  {{ subject.letter }}
+                </q-avatar>
+              </div>
+              <div class="ml-3">
+                <h5 class="text-sm font-medium leading-none text-gray-900">{{ subject.subjectName }}</h5>
+                <p class="text-gray-700 text-sm">{{ subject.DESCRIPTION }}</p>
+              </div>
+            </div>
+          </router-link>
+        </li>
+      </ul>
+    </div>
+    
+
+  </q-page>
 </template>
 
 <script>
-import { dbFApp } from "../boot/firebase"
+import { Loading } from "quasar";
+import { dbAuth, dbFApp } from 'src/boot/firebase'
+import { mapGetters, mapState } from "vuex";
 
- import { mapGetters } from 'vuex'
 export default {
-  data() {
+  data(){
+
+
     return{
-      bear: [],
-      cats: []
+      subjects: [],
     }
   },
-  computed: {
-    ...mapGetters('subjects', ['subjects']),
-  },
   methods: {
-    // renaming(){
-    //   let n = 'CAT'
-    //   let w
-    //   for(let i = 0; i<= 10; i++){
-    //     this.w=n.replace(/[0-9]/, parseInt(n.match(/[0-9]/)) + i)
-    //     return this.cats = w
-    //   }
-    //   console.log(this.cats)
-    // }
+
+
+    readSubjectFirestore() {
+       Loading.show({
+        message: 'Carregando as disciplinas...'
+       });
+      dbFApp.collection('QUIZ').get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          this.subjects.push(doc.data())
+          Loading.hide()
+        })
+      })
+    }
   },
   created(){
-
-      let docRef = dbFApp.collection('QUIZ').doc('Categorias');
-      docRef.get().then(querySnapshot => {
-        if (querySnapshot.exists) {
-           console.log(querySnapshot.data())
-          this.bear.push(querySnapshot.data())
-        }else {
-          console.log('Es um perdedor')
-        }
-      }).catch((error) => {
-        console.log('error no servidor::', error)
-      })
+    
+    this.readSubjectFirestore()
+   
   }
-//   for(let i = 0; i<= 10; i++){
-//  this.w=this.n.replace(/[0-9]/, parseInt(this.n.match(/[0-9]/)) + i)
-//   console.log(this.w)
-// }
 }
 </script>
 

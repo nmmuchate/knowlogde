@@ -3,7 +3,7 @@
   cursor: pointer;
 }
 .option-default div:nth-child(1){
-  visibility: hidden;
+  display: none;
 }
 .option-default div:nth-child(2) div:nth-child(1){
   display: inline;
@@ -13,4 +13,43 @@
 .option-default div:nth-child(2){
   background-color: #ffffff;
   color: #616161;
+}
+
+/* wrong custom classes */
+.option-wrong {
+  cursor: pointer;
+}
+
+.option-wrong  div:nth-child(1){
+  display: none; 
+}
+
+.option-wrong div:nth-child(2) div:nth-child(1){
+  display: inline;
+  background-color: #262626;
+  color: #ffffff;
+}
+
+.option-wrong div:nth-child(2){
+  background-color: #dc2626;
+  color: #ffffff;
+}
+
+/* answer correct custom classes */
+.option-correct {
+  cursor: pointer;
+}
+
+.option-correct div:nth-child(1){
+  display: inline;
+}
+
+.option-correct div:nth-child(2) div:nth-child(1){
+  background-color: #262626;
+  color: #ffffff;
+}
+
+.option-correct div:nth-child(2){
+  background-color: #22c55e;
+  color: #ffffff;
 }
