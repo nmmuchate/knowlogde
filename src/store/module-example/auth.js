@@ -8,7 +8,15 @@ const state = {
 
 const mutations = {
   addUser(state, payload){
+<<<<<<< Updated upstream
     Vue.set(state.users, payload.id, payload.object)
+=======
+    state.userState = payload
+  },
+  setUserDetails(state, payload){
+    console.log('setUserDetails', payload)
+    state.userState = payload
+>>>>>>> Stashed changes
   }
 }
 
@@ -41,6 +49,20 @@ const actions = {
     dbAuth.signInWithEmailAndPassword(payload.email, payload.password)
       .then(response => {
         console.log('response', response)
+<<<<<<< Updated upstream
+=======
+
+        // set user to local storage
+        commit('setUserDetails', {
+          id: response.user.uid,
+          email: response.user.email,
+          password: response.user.password
+        })
+
+        this.$router.push('/home')
+        Loading.hide()
+      })
+>>>>>>> Stashed changes
       .catch(error => {
         console.log(error.message)
       })
