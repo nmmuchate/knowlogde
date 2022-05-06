@@ -1,20 +1,14 @@
 <template>
     <q-page>
 
-        
-
         <q-form
           @submit="onSubmit"
           class="q-gutter-md"
         >
 
-            <div class="flex flex-col items-center mt-6">
-                <q-btn @click="uploadAvatar()" class='w-12 h-12 rounded-full ml-4' round>
-                    <q-avatar size="48px">
-                        <img src='../assets/avatar.svg' alt='' >
-                    </q-avatar>
-                </q-btn>
-            </div>
+            <avatar-input-component
+              v-model="formData.photoURL"
+            />
 
           <q-input
             outlined
@@ -63,9 +57,9 @@
               type="submit"
               class="full-width"
               @click="test"
-              color="primary" 
+              color="primary"
             />
-            
+
           </div>
         </q-form>
     </q-page>
@@ -74,6 +68,7 @@
 <script>
 
 import { mapState } from 'vuex'
+import AvatarInputComponent from '../components/Profile/AvatarInputComponent.vue'
 // import  from 'usequasar'
 
 export default {
@@ -84,8 +79,12 @@ export default {
                 email: '',
                 password: '',
                 passwordConfirm: '',
+                photoURL: ''
             }
         }
+    },
+    components: {
+      AvatarInputComponent
     },
     computed: {
         ...mapState('auth', ['userState']),
@@ -102,11 +101,12 @@ export default {
             })
         },
         uploadAvatar(){
-            
+
             this.$q.notify({
                 color: 'positive',
                 text: 'Avatar atualizado com sucesso!'
             })
+            return 'img/profile/'+ this.formData.photoURL
         }
     }
 }
