@@ -48,7 +48,6 @@ const actions = {
       }
 
       dbFApp.collection('users').doc(dbAuth.currentUser.uid).set(newuser).then(res => {
-        console.log('user added', res.id)
 
         // add user to store
         commit('addUser', newuser)
@@ -70,7 +69,6 @@ const actions = {
     Loading.show()
     dbAuth.signInWithEmailAndPassword(payload.email, payload.password)
       .then(response => {
-        console.log('response', response)
 
 
         // set user to local storage
@@ -90,14 +88,21 @@ const actions = {
         console.log(error.message)
       })
   },
+  // updateUser({commit}, payload){
+  //   console.log('updateUser', payload)
+  //   dbFApp.collection('users').doc(payload.id).update(payload.data).then(res => {
+  //     console.log('user updated', res)
+  //     commit('setUserDetails', payload.data)
+  //   })
+  // },
+
+
   handleAuthStateChanged({ commit }, payload){
     console.log('payload', payload)
     dbAuth.onAuthStateChanged(user => {
-      console.log('user', user)
       if (user) {
         // Call current user from dbFapp.
         dbFApp.collection('users').doc(user.uid).get().then(res => {
-          console.log('res', res.data())
           commit('setUserDetails', res.data())
         })
 

@@ -1,67 +1,59 @@
 <template>
     <q-page>
+      <div class='flex justify-center' >
 
-        <q-form
-          @submit="onSubmit"
-          class="q-gutter-md"
-        >
-
-            <avatar-input-component
-              v-model="formData.photoURL"
-            />
+          <avatar-input-component
+            v-model="photoURL"
+          />
+        </div>
 
           <q-input
             outlined
-            v-model="formData.name"
+            v-model="name"
             :label="userState.name"
             hint="Actualize o seu nome"
-            lazy-rules
             :rules="[ val => val && val.length > 0 || 'Please type something']"
           />
 
           <q-input
             outlined
-            disable
+            v-model="email"
             type="email"
             :label="userState.email"
             hint="Este é o seu email"
-            lazy-rules
-            :rules="[val => !!val || 'Por favor, insira o seu email']"
           />
 
           <q-input
             outlined
             type="password"
-            v-model="formData.password"
+            v-model="password"
             label="senha"
             hint="Introduza a sua nova senha"
             lazy-rules
-            :rules="[val => !!val || 'Por favor, insira a sua senha']"
           />
 
           <q-input
             outlined
             type="password"
-            v-model="formData.passwordConfirm"
+            v-model="passwordConfirm"
             label="Confirmar senha"
             hint="Confirme a sua senha"
             lazy-rules
             :rules="[val => !!val || 'Por favor, confirme a sua senha',
-            val => val === formData.password || 'As senhas não coincidem']"
+            val => val === password || 'As senhas não coincidem']"
           />
 
           <div class="flex items-baseline justify-between">
             <q-btn
               label="Atualizar dados"
+              @click="updateUser()"
               no-caps
               type="submit"
               class="full-width"
-              @click="test"
               color="primary"
             />
 
           </div>
-        </q-form>
     </q-page>
 </template>
 
@@ -69,46 +61,60 @@
 
 import { mapState } from 'vuex'
 import AvatarInputComponent from '../components/Profile/AvatarInputComponent.vue'
+import { Loading } from 'quasar'
+
+import { dbFApp, dbAuth } from '../boot/firebase'
 // import  from 'usequasar'
 
 export default {
-    data() {
-        return {
-            formData: {
-                name: '',
-                email: '',
-                password: '',
-                passwordConfirm: '',
-                photoURL: ''
-            }
-        }
-    },
-    components: {
-      AvatarInputComponent
-    },
-    computed: {
-        ...mapState('auth', ['userState']),
-        test(){
-            console.log('userState::',this.userState.name)
-            return this.userState
-        }
-    },
-    methods: {
-        onSubmit() {
-            this.$q.notify({
-                color: 'positive',
-                text: 'Formulário enviado com sucesso!'
-            })
-        },
-        uploadAvatar(){
+  data() {
+      return {
+        name: '',
+        email: '',
+        password: '',
+        passwordConfirm: '',
+        photoURL: ''
+      }
+  },
+  components: {
+    AvatarInputComponent
+  },
+  computed: {
+      ...mapState('auth', ['userState']),
+      test(){
+        return this.email > 0
+      }
+  },
+  methods: {
+    updateUser(){
+      if(this.name === ''){
+        this.name = this.userState.name
+      }
+      if(this.email === ''){
+        this.email = this.userState.email
+      }
+      Loading.show({
+        message: 'Actualizando...',
+      })
+      dbAuth.currentUser.updateEmail(this.email)
+        .then(() => {
+          console.log('Email updated')
+        }).catch((error) => {
+          console.log(error)
+        })
+      dbFApp.collection('users').doc(this.userState.id)
+        .update({name: this.name})
+        .then(() => {
+          console.log('Document successfully updated!')
+          Loading.hide()
+          this.$router.push('/settings')
+        })
+        .catch((error) => {
+          console.error('Error updating document: ', error)
+        })
 
-            this.$q.notify({
-                color: 'positive',
-                text: 'Avatar atualizado com sucesso!'
-            })
-            return 'img/profile/'+ this.formData.photoURL
-        }
     }
+  }
 }
 </script>
 
