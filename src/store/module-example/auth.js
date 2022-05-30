@@ -21,6 +21,10 @@ const mutations = {
 const actions = {
   registerUser({commit}, payload){
     console.log('payload', payload)
+
+    // this.errors = []
+    // if()
+
     dbAuth.createUserWithEmailAndPassword(payload.email, payload.password).then(res => {
       // add user to firebase firestore
       let newuser = {
@@ -101,20 +105,14 @@ const actions = {
     console.log('payload', payload)
     dbAuth.onAuthStateChanged(user => {
       if (user) {
+
         // Call current user from dbFapp.
         dbFApp.collection('users').doc(user.uid).get().then(res => {
           commit('setUserDetails', res.data())
         })
-
-        // set user to local storage
-        // commit('setUserDetails', {
-        //   id: user.uid,
-        //   name: user.name,
-        //   email: user.email,
-        //   photoURL: user.photoURL,
-        // })
-
         this.$router.push('/home')
+
+
       } else {
         console.log('no user')
         this.$router.push('/')
@@ -122,6 +120,26 @@ const actions = {
     }
     )
   },
+
+  signInWithGoogleProviderPopUp(){
+    dbAuth.signInWithPopup(new dbAuth.GoogleAuthProvider())
+      .then(res => {
+        console.log('res', res)
+      })
+      .catch(err => {
+        console.log('err', err)
+      })
+  }
+
+  resetPassword({},payload){
+    console.log('resetPassword', payload)
+    dbAuth.sendPasswordResetEmail(payload).then(res => {
+      console.log('resetPassword', res)
+      console.log('Email sent.')
+    })
+  },
+
+
   logoutUser(){
     dbAuth.signOut()
     commit('setUserDetails', null)

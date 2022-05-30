@@ -1,12 +1,12 @@
 <template>
-  <q-page>  
+  <q-page>
       <div class=" ">
-    <div class=" e">
+    <div class="">
         <div class="flex justify-center">
              <img src="../assets/logo.svg" alt="" class="h-12">
         </div>
         <h3 class="text-2xl font-bold text-center">Introduza a sua conta</h3>
-       
+
 
 
         <q-form
@@ -45,15 +45,16 @@
               no-caps
               type="submit"
               class=""
-              color="primary" 
+              color="primary"
             />
             <q-btn
               label="Esqueceu a senha?"
               no-caps
               flat
+              @click="$router.push('/forgot-password')"
               type="submit"
               class="q-mt-sm"
-              color="primary" 
+              color="primary"
             />
           </div>
         </q-form>
@@ -64,7 +65,7 @@
             label="Criar uma conta"
             no-caps
             flat
-            color="primary" 
+            color="primary"
             class="q-mt-sm"
             @click="$router.push('/register')"
           />
@@ -83,7 +84,7 @@ export default {
 
     return {
       formData: {
-        email: '',
+        email: 'muchate@gmail.com',
         password: '',
         rememberMe: false
       },
@@ -91,11 +92,14 @@ export default {
     }
   },
   methods:{
-    ...mapActions('auth', ['loginUser']),
+    ...mapActions('auth', ['loginUser', 'resetPassword']),
     onSubmit() {
       this.loginUser(this.formData)
     },
+    sendPasswordReset() {
+      this.resetPassword(this.formData.email)
+    }
   },
-  
+
 }
 </script>
