@@ -70,7 +70,18 @@
             @click="$router.push('/register')"
           />
         </div>
-
+        <!-- Button for loggin with google provider -->
+        <div class="text-center pt-4">
+          <q-separator />
+          <q-btn
+            label="Entrar com o Google"
+            no-caps
+            flat
+            color="primary"
+            class="q-mt-sm"
+            @click="registerAndLoginWithGoogleProvider()"
+          />
+        </div>
     </div>
   </div>
   </q-page>
@@ -92,13 +103,10 @@ export default {
     }
   },
   methods:{
-    ...mapActions('auth', ['loginUser', 'resetPassword']),
+    ...mapActions('auth', ['loginUser', 'resetPassword', 'registerAndLoginWithGoogleProvider']),
     onSubmit() {
       this.loginUser(this.formData)
     },
-    sendPasswordReset() {
-      this.resetPassword(this.formData.email)
-    }
   },
 
 }

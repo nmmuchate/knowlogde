@@ -44,9 +44,12 @@ import 'firebase/firestore'
 
   let dbAuth = fbApp.auth();
   let dbFApp = fbApp.firestore();
+  const provider = new firebase.auth.GoogleAuthProvider();
+
 
   export {
     dbAuth,
     dbFApp,
-    fbApp
+    fbApp,
+    provider
   }

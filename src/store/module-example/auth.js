@@ -1,11 +1,9 @@
 import { Loading } from 'quasar'
-import { dbAuth, dbFApp } from 'src/boot/firebase'
+import { dbAuth, dbFApp, provider } from 'src/boot/firebase'
+
 // import Vue from 'vue'
 // import { uid } from 'quasar'
 
-const state = {
-  userState: null,
-}
 
 const mutations = {
   addUser(state, payload){
@@ -20,6 +18,7 @@ const mutations = {
 
 const actions = {
   registerUser({commit}, payload){
+    Loading.show()
     console.log('payload', payload)
 
     // this.errors = []
@@ -58,14 +57,35 @@ const actions = {
 
 
         this.$router.push('/home')
+        Loading.hide()
       })
       .catch(err => {
         console.log('err', err)
+        Loading.hide()
       })
 
     })
     .catch(error => {
       console.log(error.message)
+    })
+  },
+
+  registerAndLoginWithGoogleProvider(){
+    Loading.show();
+    dbAuth.signInWithPopup(provider).then(res => {
+      let credential = res.credential;
+      let token = credential.accessToken;
+      let user = res.user;
+      console.log('user', user)
+      console.log('token', token)
+      console.log('credential', credential)
+      Loading.hide()
+    }).catch((error) => {
+      console.log(error.message)
+      console.log(error.code)
+      console.log(error.email)
+      console.log(error. credential)
+
     })
   },
 
@@ -121,15 +141,6 @@ const actions = {
     )
   },
 
-  signInWithGoogleProviderPopUp(){
-    dbAuth.signInWithPopup(new dbAuth.GoogleAuthProvider())
-      .then(res => {
-        console.log('res', res)
-      })
-      .catch(err => {
-        console.log('err', err)
-      })
-  }
 
   resetPassword({},payload){
     console.log('resetPassword', payload)
@@ -152,6 +163,10 @@ const getters = {
     console.log(state.users)
     return state.users
   }
+}
+
+const state = {
+  userState: null,
 }
 
 export default {
