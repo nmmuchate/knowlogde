@@ -11,9 +11,9 @@
 
         <!-- quiz timer container -->
         <div class="bg-white shadow-lg p-1 rounded-full w-full h-3 mt-4">
-          
+
           <q-linear-progress rounded :value="timer" class="q-pa-xs"/>
-   
+
         </div>
         <!-- question container -->
         <div class="rounded-lg bg-gray-100 p-2 .neumorph-1 text-center font-bold tex-gray-800 mt-8">
@@ -24,7 +24,7 @@
 
         <!-- answers container -->
         <div class='mt-8'>
-          
+
           <!-- answer container -->
           <div  v-for='(choice, item) in currentQuestion.incorrectAnswer' :key='item' >
             <div :ref="optionChosen" @click="onOptionClicked(choice, item)" class='neumorph-1 option-default bg-gray-100 p-2 rounded-lg mb-3 relative'>
@@ -33,19 +33,18 @@
                 <p class='transform -rotate-45'>+1</p>
               </div>
 
-              <div class="rounded-lg font-bold flex p-2"> 
-                
+              <div class="rounded-lg font-bold flex p-2">
+
                 <!-- answer ID -->
 
-                <div class="p-3 rounded-lg">{{item +1}}</div>
+                <div class="p-3 rounded-lg">{{ charIndex(item) }}</div>
 
                 <!-- option text -->
                 <div class="flex items-center pl-6">{{choice}}</div>
-              </div>        
+              </div>
             </div>
           </div>
         </div>
-
         <!-- progress indicator container -->
         <div class='mt-8 text-center'>
           <div class='h-1 w-12 rounded-full bg-gray-800 mx-auto'>
@@ -99,6 +98,10 @@
       EndOfQuiz
     },
     methods: {
+
+      charIndex(i){
+        return String.fromCharCode(65 + i)
+      },
       loadQuestion(){
         this.canClick = true
         if (this.questions.length > this.questionCounter) {
@@ -123,7 +126,7 @@
             divSelected.classList.remove('option-correct')
             divSelected.classList.remove('option-wrong')
             divSelected.classList.add('option-default')
-          } 
+          }
           this.loadQuestion()
         }, 1000)
       },
@@ -135,7 +138,7 @@
             this.score ++
             divContainer.classList.add('option-correct')
             divContainer.classList.remove('option-default')
-            
+
           }else {
             divContainer.classList.add('option-wrong')
             divContainer.classList.remove('option-default')
@@ -170,10 +173,9 @@
       //       score: this.score
       //     })
       //   }
-      // }  
-      
-    },
+      // }
 
+    },
     mounted(){
       Loading.show({
         message: 'Carregando as questões...'
@@ -188,7 +190,7 @@
                 question: serverQuestion.question,
                 choices: '',
                 answer: ''
-              };              
+              };
 
               const choices = serverQuestion.incorrectAnswer;
 
