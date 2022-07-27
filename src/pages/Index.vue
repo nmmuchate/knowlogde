@@ -1,6 +1,6 @@
 <template>
   <q-page>
-      <div class=" ">
+      <div class="px-8 py-6">
     <div class="">
         <div class="flex justify-center">
              <img src="../assets/logo.svg" alt="" class="h-12">

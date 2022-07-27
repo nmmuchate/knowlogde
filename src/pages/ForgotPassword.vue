@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <q-page class="px-8 py-6">
     <!-- <q-toolbar>
       <q-toolbar-title>
         <span class="text-primary">

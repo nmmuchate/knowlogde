@@ -1,9 +1,9 @@
 <template>
   <q-page>
     <!-- quiz container -->
-        <img src='../assets/abstract.svg' alt='' class='absolute -top-10 left-0 object-none'>
+        <img src='../assets/abstract.svg' alt='' class='absolute -top-25 left-0 object-none'>
         <!-- quiz score container -->
-      <div class='relative z-20'>
+      <div class='relative z-20 px-8 py-6'>
         <div class="text-gray-800 text-right">
           <span class="font-medium">Pontuação:</span>
           <span class="font-bold text-red-600">{{score}}</span>
@@ -40,7 +40,7 @@
                 <div class="p-3 rounded-lg">{{ charIndex(item) }}</div>
 
                 <!-- option text -->
-                <div class="flex items-center pl-6">{{choice}}</div>
+                <div class="flex items-center pl-6">{{ choice }}</div>
               </div>
             </div>
           </div>
@@ -63,7 +63,7 @@
   import { dbFApp } from '../boot/firebase'
   // import '../index.css'
 
-  import EndOfQuiz from 'src/components/Quiz/EndOfQuiz.vue'
+  import EndOfQuiz from 'src/components/Quiz/EndOfQuiz'
   export default {
     data(){
 
@@ -160,20 +160,23 @@
           }
         }, 1500)
       },
-      // ifUserPassed(){
-      //   if(this.score >= this.questions.length * 0.7){
-      //     return true
-      //   }else {
-      //     return false
-      //   }
-      // },
-      // setUserScore(){
-      //   if(this.ifUserPassed()){
-      //     dbFApp.collection('users').doc(this.$store.state.user.uid).update({
-      //       score: this.score
-      //     })
-      //   }
-      // }
+      ifUserHitsAQuestion(){
+
+      },
+      ifUserPassed(){
+        if(this.score >= this.questions.length * 0.7){
+          return true
+        }else {
+          return false
+        }
+      },
+      setUserScore(){
+        if(this.ifUserPassed()){
+          dbFApp.collection('users').doc(this.$store.state.user.uid).update({
+            score: this.score
+          })
+        }
+      }
 
     },
     mounted(){

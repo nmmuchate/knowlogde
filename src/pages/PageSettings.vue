@@ -1,5 +1,5 @@
 <template>
-    <q-page>
+    <q-page class="px-8 py-6">
       <div class="mb-6 bg-indigo-5">
         <!-- button editar -->
         <!-- <q-btn

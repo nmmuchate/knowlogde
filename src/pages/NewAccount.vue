@@ -1,12 +1,12 @@
 <template>
-  <q-page>  
-      <div class="flex items-center justify-center ">
+  <q-page>
+      <div class="flex items-center justify-center px-8 py-6">
     <div class=" mt-4 text-left bg-white">
         <div class="flex justify-center">
              <img src="../assets/logo.svg" alt="" class="h-12">
         </div>
         <h3 class="text-2xl font-bold text-center">Introduza a sua nova conta</h3>
-       
+
         <q-form
           @submit="onSubmit"
           class="q-gutter-md"
@@ -61,7 +61,7 @@
               no-caps
               type="submit"
               class="full-width"
-              color="primary" 
+              color="primary"
             />
             <!-- <q-btn
               label="Esqueci a senha"
@@ -69,7 +69,7 @@
               flat
               type="submit"
               class="q-mt-sm"
-              color="primary" 
+              color="primary"
             /> -->
           </div>
         </q-form>
@@ -79,7 +79,7 @@
             label="Entrar com a minha conta"
             no-caps
             flat
-            color="primary" 
+            color="primary"
             class="q-mt-sm"
             @click="$router.push('/')"
           />
@@ -112,6 +112,6 @@ export default {
       this.registerUser(this.formData)
     },
   },
-  
+
 }
 </script>

@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Uma apliação para ajudar no exame de admissão",
   "productName": "knowlodge",
-  "author": "",
+  "author": "Nicolas Muchate",
   "private": true,
   "scripts": {
     "test": "echo \"No test specified\" && exit 0"

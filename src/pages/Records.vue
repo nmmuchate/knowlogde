@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="px-8 py-6">
     <q-tabs
       dense
       class="text-dark"

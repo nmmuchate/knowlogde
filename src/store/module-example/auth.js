@@ -130,7 +130,7 @@ const actions = {
         dbFApp.collection('users').doc(user.uid).get().then(res => {
           commit('setUserDetails', res.data())
         })
-        this.$router.push('/home')
+
 
 
       } else {

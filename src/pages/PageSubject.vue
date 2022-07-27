@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <q-page class="px-8 py-6">
     <div class="mb-4">
 
       <h5 class="text-xl font-bold leading-none text-gray-900">As disciplinas de preparação</h5>
@@ -26,7 +26,7 @@
         </li>
       </ul>
     </div>
-    
+
 
   </q-page>
 </template>
@@ -60,9 +60,9 @@ export default {
     }
   },
   created(){
-    
+
     this.readSubjectFirestore()
-   
+
   }
 }
 </script>

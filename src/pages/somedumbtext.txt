@@ -1,0 +1,168 @@
+<script>
+  import { ref , computed } from 'vue'
+export default {
+
+  setup() {
+    const questions = ref([
+      {
+        question: 'Qual é a capital de Mozambique?',
+        correctAnswer: 'Maputo',
+        incorrectAnswer: [
+          'Sofala',
+          'Manica',
+          'Gaza',
+          'Maputo'
+        ],
+        selected: null
+      },
+      {
+        question: 'Qual é a capital de Sofala?',
+        correctAnswer: 'Beira',
+        incorrectAnswer: [
+          'Beira',
+          'Manga',
+          'Gaza',
+          'Maputo'
+        ],
+        selected: null
+      },
+      {
+        question: 'What is vue js?',
+        correctAnswer: 'Vue Js is a framework for building user interfaces',
+        incorrectAnswer: [
+          'Vue Js is a framework for building user interfaces',
+          'Is a modern Java library for building user interfaces',
+          'Is a modern PHP library for building user interfaces',
+          'Is a modern C++ library for building user interfaces',
+        ],
+        selected: null
+      },
+    ])
+    const quizCompleted = ref(false)
+    const activeQuestion = ref(false)
+    const currentQuestion = ref(0)
+    const answerChosed = ref(null)
+    const score = computed(() =>{
+      let value = 0
+      questions.value.map(question => {
+        if(question.selected === question.correctAnswer){
+          value++
+        }
+      })
+      return value
+    })
+
+    const getCurrentQuestion = computed(() => {
+      let question = questions.value[currentQuestion.value]
+      question.index = currentQuestion.value
+      console.log('question::', question)
+      return question
+    })
+
+  // make a method that identifies the answer when the submit button is clicked
+    // const selectAnswer = (answer) => {
+    //   let question = getCurrentQuestion.value
+    //   question.selected = answer
+    //   questions.value[currentQuestion.value] = question
+    // }
+
+
+    const getAnswer = () =>{
+      let question = getCurrentQuestion.value
+
+      if (answerChosed.value === question.correctAnswer) {
+console.log('answerChosed::', answerChosed.value)
+console.log('voce acertou')
+        score.value++
+      } else {
+        question.selected = question.incorrectAnswer
+        questions.value[currentQuestion.value] = question
+      }
+      activeQuestion.value = true
+    }
+
+    const setAnswer = answer => {
+      let question = getCurrentQuestion.value
+      question.selected = answer
+      answerChosed.value = answer
+      questions.value[currentQuestion.value] = question
+      console.log('answer::', answer)
+
+      if(answer === question.correctAnswer){
+        console.log(score.value++)
+      } else{
+        console.log('errado')
+      }
+
+
+
+      // questions.value[currentQuestion.value].selected = answer.target.value
+      // answer.target.value = null
+    }
+
+    const getNextQuestion = () => {
+      activeQuestion.value = false
+      if(currentQuestion.value < questions.value.length - 1){
+        currentQuestion.value++
+      }else {
+        quizCompleted.value = true
+      }
+    }
+
+    return {
+      questions,
+      answerChosed,
+      quizCompleted,
+      currentQuestion,
+      score,
+      getCurrentQuestion,
+      setAnswer,
+      getNextQuestion,
+      getAnswer,
+      activeQuestion
+    }
+  },
+}
+</script>
+
+<template>
+  <q-page>
+    <!-- section for quiz -->
+    <div>
+      <h2>{{ getCurrentQuestion.question }}</h2>
+      <div class="options">
+      <!-- div with a loop a button for answer -->
+       <div
+         v-for="(answer, index) in getCurrentQuestion.incorrectAnswer"
+         :key="index"
+         >
+          <q-btn
+            :class="`${
+            getCurrentQuestion.selected === answer ? answer == getCurrentQuestion.correctAnswer ? 'option-correct' : 'option-wrong'
+            : ''
+          } ${getCurrentQuestion.selected != null && answer != getCurrentQuestion.selected ? 'disabled' : '' }`"
+
+            :value="answer"
+            @click="setAnswer(answer)"
+          >
+            {{ answer }}
+          </q-btn>
+        </div>
+        <button @click="getAnswer()" >
+          Submeter
+        </button>
+        <button @click="getNextQuestion()" :disabled="!activeQuestion">
+        {{
+          getCurrentQuestion.index=== questions.length - 1
+            ? 'Finalizar'
+            : getCurrentQuestion.selected == null ? 'Selecione uma opção' : 'Próxima'
+        }}
+        </button>
+      </div>
+    </div>
+  </q-page>
+</template>
+
+<style>
+
+</style>

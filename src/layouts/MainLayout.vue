@@ -1,17 +1,17 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <main class="flex h-screen justify-center">
-      <div  class='bg-white overflow-hidden flex-none relative container shadow-lg rounded-lg px-8 py-6'>
-         
-        <!-- header for all page -->
+      <div  class='bg-white overflow-hidden flex-none relative container shadow-lg rounded-lg'>
 
+        <!-- header for all page -->
+        <!-- <header-home-component-vue v-if="showHeader"/> -->
         <!-- <div v-if="showHeader" class='flex z-50 relative justify-between items-center mb-6'>
           <div  class='row items-center'>
             <h1 class='text-2xl font-medium'>Olá, <br>Nicolas</h1>
 
           </div>
           <div class='absolute top-0 right-0 h-16 w-16 items-center'>
-            
+
             <q-btn
               flat
               color="primary"
@@ -37,8 +37,13 @@
 <script>
 import { mapActions } from "vuex";
 
+import HeaderHomeComponent from "src/components/Headers/HeaderHomeComponent.vue";
+
 export default {
   name: 'MainLayout',
+  components: {
+    HeaderHomeComponent,
+  },
   data () {
     return {
       title: 'Knowledge',
@@ -95,7 +100,7 @@ export default {
   },
   methods: {
     ...mapActions('auth',['logoutUser']),
-    
+
   }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <q-page class="px-8 py-6">
     <div>
       <h1 class='text-xl font-medium'>Prepara-te para o exame com nosso jogo</h1>
     </div>
@@ -11,7 +11,7 @@
             <p class='mb-3 font-normal text-gray-400'>
               Aqui neste modo do jogo é onde poderá simplesmente colocar o seu conhecimento em pratica sem nenhuma pressão.</p>
             <q-btn label="Experimente agora" to="/subjects" color="primary" icon-right="east"/>
-          </div>  
+          </div>
         </q-item>
         <q-item clickable>
           <div class='p-6 max-w-sm bg-green-300 rounded-lg border border-gray-200 shadow-md'>
@@ -19,7 +19,7 @@
             <p class='mb-3 font-normal text-gray-400'>
               Para cada questão tem apenas 15 segundos para responder. Este exercicio poderá ser muito útil para estudar sobre pressão.</p>
             <q-btn label="Experimente agora" to="/subjects" color="primary" icon-right="east"/>
-          </div>  
+          </div>
         </q-item>
         <q-item clickable>
           <div class='p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md'>
@@ -27,7 +27,7 @@
             <p class='mb-3 font-normal text-gray-400'>
               Veja as suas pontuações que obtém. Também pode comparar com as outras pessoas.</p>
             <q-btn label="Ver as pontuações" to="/ranking" color="primary" icon-right="east"/>
-          </div>  
+          </div>
         </q-item>
       </q-list>
      </div>
@@ -62,7 +62,7 @@ export default {
           path: '/ranking',
         }
       ],
-      
+
     }
   },
   computed: {
@@ -72,7 +72,7 @@ export default {
 </script>
 
 <style>
- 
+
   .tabsD{
     font-family: 'jost', sans-serif;
     font-style: normal;
