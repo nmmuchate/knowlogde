@@ -10,7 +10,6 @@ const mutations = {
     state.userState = payload
   },
   setUserDetails(state, payload){
-    console.log('setUserDetails', payload)
     state.userState = payload
   }
   }

@@ -1,5 +1,18 @@
 <template>
   <q-page class="px-8 py-6">
+    <div class='flex z-50 relative justify-between items-center mb-6'>
+          <div  class='row items-center'>
+            <h1 class='text-2xl font-medium'>Olá, <br>{{userState.name}}</h1>
+
+          </div>
+          <div class='absolute top-0 right-0 h-16 w-16 items-center'>
+            <q-btn to='/settings' class='w-12 h-12 rounded-full ml-4' round>
+              <q-avatar size="48px">
+                <img src='../assets/avatar.svg' alt='' >
+              </q-avatar>
+            </q-btn>
+          </div>
+        </div>
     <div>
       <h1 class='text-xl font-medium'>Prepara-te para o exame com nosso jogo</h1>
     </div>
@@ -35,11 +48,15 @@
 </template>
 
 <script>
+import { dbAuth, dbFApp } from 'src/boot/firebase'
 import { mapActions, mapGetters, mapState } from 'vuex'
+
+import { Loading } from 'quasar'
 export default {
   data() {
     return {
       tab: 'portugues',
+      userState: {},
       elemetnsInHome: [
         {
           name: 'Novo Jogo',
@@ -65,9 +82,23 @@ export default {
 
     }
   },
-  computed: {
-    // ...mapGetters('subjects', ['subjects']),
-  }
+  mounted(){
+    // take user id from firebase
+    Loading.show({
+      message: 'Carregando...',
+    })
+    let userId = dbAuth.currentUser.uid
+    // get user name from firebase firestore
+
+    dbFApp.collection('users').doc(userId).get().then(doc => {
+      // set user name in vuex
+      this.userState = doc.data()
+
+      Loading.hide()
+    }).catch(err => {
+      console.log('Error getting document', err);
+    });
+  },
 }
 </script>
 
