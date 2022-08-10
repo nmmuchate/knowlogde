@@ -3,28 +3,26 @@
     <main class="flex h-screen justify-center">
       <div  class='bg-white overflow-hidden flex-none relative container shadow-lg rounded-lg'>
 
-        <!-- header for all page -->
-        <!-- <header-home-component-vue v-if="showHeader"/> -->
-        <!-- <div v-if="showHeader" class='flex z-50 relative justify-between items-center mb-6'>
-          <div  class='row items-center'>
-            <h1 class='text-2xl font-medium'>Olá, <br>Nicolas</h1>
-
-          </div>
-          <div class='absolute top-0 right-0 h-16 w-16 items-center'>
-
-            <q-btn
-              flat
-              color="primary"
-              label="Sair"
-              @click="logoutUser"
-              />
-            <q-btn to='/settings' class='w-12 h-12 rounded-full ml-4' round>
-              <q-avatar size="48px">
-                <img src='../assets/avatar.svg' alt='' >
-              </q-avatar>
-            </q-btn>
-          </div>
-        </div> -->
+        <!-- header container -->
+      <q-header v-if="showHeader" class="bg-white align-center text-primary">
+        <q-toolbar>
+          <q-btn
+            flat
+            round
+            dense
+            color="indigo-5"
+            icon="arrow_back"
+            class="" />
+          <q-toolbar-title class="text-xl font-bold leading-none text-gray-900 text-center">
+            {{title}}
+          </q-toolbar-title>
+          <q-btn to='/settings' class='w-12 h-12 rounded-full ml-4' round>
+            <q-avatar size="48px">
+              <img src='../assets/avatar.svg' alt='' >
+            </q-avatar>
+          </q-btn>
+        </q-toolbar>
+      </q-header>
 
         <q-page-container>
           <router-view />
@@ -46,7 +44,7 @@ export default {
   },
   data () {
     return {
-      title: 'Knowledge',
+      title: '',
       leftDrawerOpen: false,
       isShowedHeader: true,
       navs: [
@@ -55,10 +53,9 @@ export default {
             icon:'home',
             to:'/home'
           },
-            {
-            label:'Conversas',
-            icon:'chat',
-            to:'/chat'
+          {
+            label:'Disciplinas',
+            icon:'school',
           },
           {
             label:'Recordes',
@@ -78,10 +75,6 @@ export default {
       let currentPath = this.$route.fullPath
       if (currentPath == '/settings') {
         this.title = 'Definições'
-        return this.isShowedHeader
-      }
-      else if (currentPath == '/home') {
-        this.title = 'Knowlodge'
         return this.isShowedHeader
       }
       else if (currentPath == '/ranking') {
