@@ -44,6 +44,7 @@ const actions = {
             timesPlayed: 0,
             timesWon: 0,
             timesLost: 0,
+            subjectWithBigScore: '',
             scores: [],
           }
         }
@@ -78,13 +79,45 @@ const actions = {
       console.log('user', user)
       console.log('token', token)
       console.log('credential', credential)
-      Loading.hide()
+      console.log('res', res)
+      let userDetails = {
+        id: dbAuth.currentUser.uid,
+        name: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL,
+        createAt: new Date(),
+        updateAt: new Date(),
+        isOnline: true,
+        details: {
+          phone: user.phoneNumber,
+          subjectsLiked: [],
+          universitys: [],
+        },
+        detailsGame: {
+          highScore: 0,
+          countHowManyTimesPlayed:{
+            timesPlayed: 0,
+            timesWon: 0,
+            timesLost: 0,
+            subjectWithBigScore: '',
+            scores: [],
+          }
+        }
+      }
+      dbFApp.collection('users').doc(dbAuth.currentUser.uid).set(userDetails).then(res => {
+
+      this.$router.push('/home')
+      Loading.hide();
+      }).catch(err => {
+        console.log('err', err)
+
+      })
     }).catch((error) => {
       console.log(error.message)
       console.log(error.code)
       console.log(error.email)
       console.log(error. credential)
-
+      Loading.hide();
     })
   },
 
@@ -124,17 +157,16 @@ const actions = {
     console.log('payload', payload)
     dbAuth.onAuthStateChanged(user => {
       if (user) {
-
         // Call current user from dbFapp.
-        dbFApp.collection('users').doc(user.uid).get().then(res => {
-          commit('setUserDetails', res.data())
-        })
-
+        // dbFApp.collection('users').doc(user.uid).get().then(res => {
+        //   commit('setUserDetails', res.data())
+        // })
+        this.user = user
 
 
       } else {
-        console.log('no user')
         this.$router.push('/')
+        console.log('no user')
       }
     }
     )
@@ -152,7 +184,6 @@ const actions = {
 
   logoutUser(){
     dbAuth.signOut()
-    commit('setUserDetails', null)
     this.$router.push('/')
   }
 }
