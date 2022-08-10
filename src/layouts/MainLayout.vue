@@ -10,13 +10,12 @@
             flat
             round
             dense
-            color="indigo-5"
             icon="arrow_back"
-            class="" />
+            class="bg-indigo-700 text-white" />
           <q-toolbar-title class="text-xl font-bold leading-none text-gray-900 text-center">
             {{title}}
           </q-toolbar-title>
-          <q-btn to='/settings' class='w-12 h-12 rounded-full ml-4' round>
+          <q-btn to='/settings' class='w-12 h-12 rounded-full ml-4 shadow-2xl' round>
             <q-avatar size="48px">
               <img src='../assets/avatar.svg' alt='' >
             </q-avatar>
@@ -73,11 +72,7 @@ export default {
   computed: {
     showHeader(){
       let currentPath = this.$route.fullPath
-      if (currentPath == '/settings') {
-        this.title = 'Definições'
-        return this.isShowedHeader
-      }
-      else if (currentPath == '/ranking') {
+      if (currentPath == '/ranking') {
         this.title = 'Recordes'
         return this.isShowedHeader
       }

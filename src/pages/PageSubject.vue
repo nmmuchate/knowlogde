@@ -12,7 +12,7 @@
             <div class="cursor-pointer flex items-center space-x-4">
               <div class="flex-shrink-0">
                 <q-avatar
-                  color="primary"
+                  color="indigo-700"
                   text-color="white">
                   {{ subject.letter }}
                 </q-avatar>
