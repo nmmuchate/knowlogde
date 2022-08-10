@@ -7,9 +7,9 @@
       active-color="primary"
       indicator-color="primary"
       align="center"
-
+      v-model="tab"
     >
-        <q-tab>
+        <q-tab name="nacionais">
             <q-card class="my-card">
               <q-img src="https://cdn.quasar.dev/img/parallax2.jpg"></q-img>
               <q-card-actions>
@@ -17,11 +17,11 @@
                 dense
                   class="text-center"
                   no-caps
-                  flat>Resultados Nacionais</q-btn>
+                  flat>Nacionais</q-btn>
               </q-card-actions>
             </q-card>
         </q-tab>
-        <q-tab >
+        <q-tab name="pessoais">
           <q-card class="my-card">
             <q-img src="https://cdn.quasar.dev/img/parallax2.jpg"></q-img>
             <q-card-actions>
@@ -29,50 +29,94 @@
                 dense
                 class="text-center"
                 no-caps
-                flat>Resultados Pessoais</q-btn>
+                no-wrap
+                flat>Pessoais</q-btn>
             </q-card-actions>
           </q-card>
         </q-tab>
     </q-tabs>
-    <div class="q-pt-xl q-px-md">
-      <p><strong>Resultados nacionais</strong></p>
-    </div>
+    <q-tab-panels
+      animated
+      v-model="tab"
+      transition-next="slide-up"
+      transition-prev="slide-down"
+    >
+      <q-tab-panel name="nacionais">
+        <div class="q-pt-xl q-px-md">
+          <h5 class="text-xl font-bold leading-none text-gray-900">Resultados nacionais</h5>
+        </div>
+          <q-separator spaced inset />
 
-    <q-list>
-      <q-item v-for="user in users" :key="user">
-        <q-item-section avatar>
-          <q-avatar>
-            <img :src="user.photoURL">
-          </q-avatar>
-        </q-item-section>
-        <q-item-section>
-          <q-item-label>{{user.name}}</q-item-label>
-         <q-item-label
-          caption
-          lines="2">
-          {{user.detailsGame.countHowManyTimesPlayed.subjectWithBigScore}}
-        </q-item-label>
-        </q-item-section>
+        <q-list>
+          <q-item v-for="user in users" :key="user">
+            <q-item-section avatar>
+              <q-avatar>
+                <img :src="user.photoURL">
+              </q-avatar>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>{{user.name}}</q-item-label>
+            <q-item-label
+              caption
+              lines="2">
+              {{user.detailsGame.countHowManyTimesPlayed.subjectWithBigScore}}
+            </q-item-label>
+            </q-item-section>
 
-        <q-item-section side top>
-          <q-item-label caption>{{user.detailsGame.highScore}}V</q-item-label>
-          <div :class="changeColor(user)">
-            <q-icon :name="changeIcon(user)" />
+            <q-item-section side top>
+              <q-item-label caption>{{user.detailsGame.highScore}}V</q-item-label>
+              <div :class="changeColor(user)">
+                <q-icon :name="changeIcon(user)" />
+              </div>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-tab-panel>
+      <q-tab-panel name="pessoais">
+        <div class="q-pt-xl q-px-md">
+          <h5 class="text-xl font-bold leading-none text-gray-900">Resultados Pessoais</h5>
+        </div>
+        <q-separator spaced inset />
+        <div class="mt-4">
+          <div class="my-4 flex items-center justify-between">
+            <p class="text-gray-500 font-semibold">Pontos Máximos Conseguidos</p>
+            <p>{{userDetails.detailsGame.highScore}}</p>
           </div>
-        </q-item-section>
-      </q-item>
-      <q-separator spaced inset />
+          <div class="my-4 flex items-center justify-between">
+            <p class="text-gray-500 font-semibold">Disciplina com melhores pontos </p>
+            <p>{{userDetails.detailsGame.countHowManyTimesPlayed.subjectWithBigScore}}</p>
+          </div>
+          <div class="my-4 flex items-center justify-between">
+            <p class="text-gray-500 font-semibold">Vezes Jogadas</p>
+            <p>{{userDetails.detailsGame.countHowManyTimesPlayed.timesPlayed}}</p>
+          </div>
+          <div class="my-4 flex items-center justify-between">
+            <p class="text-gray-500 font-semibold">Vezes ganhadas </p>
+            <p>{{userDetails.detailsGame.countHowManyTimesPlayed.timesWon}}</p>
+          </div>
+          <div class="flex my-4 items-center justify-between">
+            <p class="text-gray-500 font-semibold">Vezes Perdidas</p>
+            <p>{{userDetails.detailsGame.countHowManyTimesPlayed.timesLost}}</p>
+          </div>
+        </div>
 
-    </q-list>
+      </q-tab-panel>
+
+    </q-tab-panels>
+
+
   </div>
 </template>
 
 <script>
   import { dbAuth, dbFApp } from 'src/boot/firebase'
+  import { Loading } from 'quasar'
   export default {
     data(){
       return{
-        users: []
+        users: [],
+        tab: 'nacionais',
+        userDetails:{}
       }
     },
     methods:{
@@ -94,13 +138,24 @@
       }
     },
     mounted(){
+
       dbFApp.collection('users').onSnapshot(snapshot => {
+        this.users = []
         // get all users from firebase firestore
         this.users.push(...snapshot.docs.map(doc => doc.data()))
         // sort users by high score and get top 10 users
         return this.users.sort((a, b) => {
           return b.detailsGame.highScore - a.detailsGame.highScore
         }).slice(0, 10)
+      })
+      // get this user details in firebase firestore
+      dbAuth.onAuthStateChanged(user => {
+        if(user){
+          dbFApp.collection('users').doc(user.uid).get().then(doc => {
+            this.userDetails = doc.data()
+            console.log(this.userDetails)
+          })
+        }
       })
     }
   }
