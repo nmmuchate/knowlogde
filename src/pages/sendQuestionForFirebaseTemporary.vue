@@ -50,9 +50,13 @@
         v-model="correctAnswer"
         label="Resposta correcta"
       />
-      <q-btn @click="organizeIncorrectAnswer()">
-        Enviar resposta para o firebase
-      </q-btn>
+      <q-input
+        rounded
+        outlined
+        color="indigo-8"
+        v-model="score"
+        label="Pontuação"
+      />
       <q-btn @click="updateDataToFirebase()">
         send
       </q-btn>
@@ -75,6 +79,7 @@ import { Loading } from 'quasar';
         incorrectAnswer_4: '',
         incorrectAnswer: [],
         correctAnswer: '',
+        score: '',
         subject: '',
         subjectId: '',
         subjects: [
@@ -92,6 +97,7 @@ import { Loading } from 'quasar';
       }
     },
     methods: {
+
       organizeSubjectInSubjectId(){
         // transforma o nome da disciplina em um id para o firebase
         switch(this.subject){
