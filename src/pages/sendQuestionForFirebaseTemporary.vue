@@ -1,6 +1,6 @@
 <template>
   <q-page class="px-8 py-6">
-    <div>
+    <div class="q-gutter-md">
       <h5 class="text-xl font-bold text-center leading-none text-gray-600">Questão</h5>
       <q-select
         color="indigo-8"
@@ -57,8 +57,12 @@
         v-model="score"
         label="Pontuação"
       />
-      <q-btn @click="updateDataToFirebase()">
-        send
+      <q-btn
+        color="positive"
+        class="full-width"
+        @click="updateDataToFirebase()"
+      >
+        Enviar
       </q-btn>
     </div>
   </q-page>
@@ -166,13 +170,13 @@ import { Loading } from 'quasar';
           this.organizeIncorrectAnswer()
           // add new question to firebase in the collection 'QUIZ' with the id 'CAT2'
           let docRef = dbFApp.collection('QUIZ').doc(this.subjectId);
-          docRef.update({
-            questions: firebase.firestore.FieldValue.arrayUnion(data)
-          }).then(() => {
-            console.log("Document successfully updated!");
-          }).catch(error => {
-            console.error("Error updating document: ", error);
-          });
+            docRef.update({
+              questions: firebase.firestore.FieldValue.arrayUnion(data)
+            }).then(() => {
+              console.log("Document successfully updated!");
+            }).catch(error => {
+              console.error("Error updating document: ", error);
+            });
           this.cleanAll()
           Loading.hide();
         }
