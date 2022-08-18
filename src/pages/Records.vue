@@ -4,8 +4,8 @@
     <q-tabs
       dense
       class="text-dark"
-      active-color="primary"
-      indicator-color="primary"
+      active-color="indigo-8"
+      indicator-color="Indigo-8"
       align="center"
       v-model="tab"
     >
@@ -14,10 +14,10 @@
               <q-img src="https://cdn.quasar.dev/img/parallax2.jpg"></q-img>
               <q-card-actions>
                 <q-btn
-                dense
+                  dense
                   class="text-center"
                   no-caps
-                  flat>Nacionais</q-btn>
+                  flat>Gerais</q-btn>
               </q-card-actions>
             </q-card>
         </q-tab>
@@ -42,12 +42,14 @@
       transition-prev="slide-down"
     >
       <q-tab-panel name="nacionais">
-        <div class="q-pt-xl q-px-md">
-          <h5 class="text-xl font-bold leading-none text-gray-900">Resultados nacionais</h5>
+        <div class="q-pt-xl">
+          <h5 class="text-xl font-bold leading-none text-gray-900">
+            Resultados Gerais
+          </h5>
         </div>
-          <q-separator spaced inset />
+          <q-separator spaced />
 
-        <q-list>
+        <q-list class="mt-4">
           <q-item v-for="user in users" :key="user">
             <q-item-section avatar>
               <q-avatar>
@@ -64,7 +66,9 @@
             </q-item-section>
 
             <q-item-section side top>
-              <q-item-label caption>{{user.detailsGame.highScore}}V</q-item-label>
+              <q-item-label caption>
+                {{user.detailsGame.highScore}}V
+              </q-item-label>
               <div :class="changeColor(user)">
                 <q-icon :name="changeIcon(user)" />
               </div>
@@ -73,12 +77,12 @@
         </q-list>
       </q-tab-panel>
       <q-tab-panel name="pessoais">
-        <div class="q-pt-xl q-px-md">
+        <div class="q-pt-xl">
           <h5 class="text-xl font-bold leading-none text-gray-900">Resultados Pessoais</h5>
         </div>
-        <q-separator spaced inset />
+        <q-separator spaced />
         <div class="mt-4">
-          <div class="my-4 flex items-center justify-between">
+          <div class=" flex items-center justify-between">
             <p class="text-gray-500 font-semibold">Pontos Máximos Conseguidos</p>
             <p>{{userDetails.detailsGame.highScore}}</p>
           </div>

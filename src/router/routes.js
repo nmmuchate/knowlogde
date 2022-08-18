@@ -15,6 +15,7 @@ const routes = [
       { path: '/editProfile', component: () => import('pages/EditProfile.vue') },
       { path: '/forgot-password', component: () => import('pages/ForgotPassword.vue') },
       { path: '/hardExam', component: () => import('pages/RealExams.vue') },
+      { path: '/sendquestion', component: () => import('pages/sendQuestionForFirebaseTemporary.vue') },
 
     ]
   },
