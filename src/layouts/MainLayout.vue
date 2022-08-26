@@ -9,9 +9,10 @@
           <q-btn
             flat
             round
+            color="indigo-8"
             dense
             icon="arrow_back"
-            class="bg-indigo-700 text-white" />
+            class="text-white" />
           <q-toolbar-title class="text-xl font-bold leading-none text-gray-900 text-center">
             {{title}}
           </q-toolbar-title>
@@ -80,8 +81,8 @@ export default {
         this.title = 'Disciplinas'
         return this.isShowedHeader
       }
-      else if (currentPath == '/sets') {
-        this.title = 'Escolha'
+      else if (currentPath == '/sendquestion') {
+        this.title = 'Add Questões'
         return this.isShowedHeader
       }
     }
