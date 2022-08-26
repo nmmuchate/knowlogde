@@ -1,8 +1,10 @@
-import { Loading } from 'quasar'
+import { Loading, Dialog, useQuasar } from 'quasar'
 import { dbAuth, dbFApp, provider } from 'src/boot/firebase'
 
 // import Vue from 'vue'
 // import { uid } from 'quasar'
+
+
 
 
 const mutations = {
@@ -66,7 +68,12 @@ const actions = {
 
     })
     .catch(error => {
-      console.log(error.message)
+      Dialog.create({
+        title: 'Error',
+        message: error.message
+      }).onOk(() =>{
+        console.log('Ok')
+      })
     })
   },
 
@@ -140,8 +147,44 @@ const actions = {
         Loading.hide()
       })
       .catch(error => {
-        Loading.hide()
-        console.log(error.message)
+        switch (error.code) {
+          case 'auth/invalid-email':
+              error.message = 'Este Email é invalido.'
+              Dialog.create({
+                title: 'Error',
+                message: error.message
+              }).onOk(()=>{
+                console.log('Este E-mail invalido')
+              })
+              break
+          case 'auth/user-not-found':
+              error.message = 'Nenhuma conta com este e-mail encontrado'
+              Dialog.create({
+                title: 'Error',
+                message: error.message
+              }).onOk(()=>{
+                console.log('Este E-mail invalido')
+              })
+              break
+          case 'auth/wrong-password':
+              error.message = 'A palavra-passe esta incorrecta'
+              Dialog.create({
+                title: 'Error',
+                message: error.message
+              }).onOk(()=>{
+                console.log('Este E-mail invalido')
+              })
+              break
+          default:
+              error.message = 'O E-mail ou a palavra-passe esta incorrecta'
+              Dialog.create({
+                title: 'Error',
+                message: error.message
+              }).onOk(()=>{
+                console.log('Este E-mail invalido')
+              })
+              break
+      }
       })
   },
   // updateUser({commit}, payload){
