@@ -70,7 +70,7 @@ const actions = {
     .catch(error => {
       Dialog.create({
         title: 'Error',
-        message: error.message
+        message: error.message,
       }).onOk(() =>{
         console.log('Ok')
       })
@@ -152,37 +152,42 @@ const actions = {
               error.message = 'Este Email é invalido.'
               Dialog.create({
                 title: 'Error',
-                message: error.message
+                message: error.message,
+
               }).onOk(()=>{
                 console.log('Este E-mail invalido')
+                Loading.hide()
               })
               break
           case 'auth/user-not-found':
               error.message = 'Nenhuma conta com este e-mail encontrado'
               Dialog.create({
                 title: 'Error',
-                message: error.message
+                message: error.message,
               }).onOk(()=>{
                 console.log('Este E-mail invalido')
               })
+              Loading.hide()
               break
           case 'auth/wrong-password':
               error.message = 'A palavra-passe esta incorrecta'
               Dialog.create({
                 title: 'Error',
-                message: error.message
+                message: error.message,
               }).onOk(()=>{
                 console.log('Este E-mail invalido')
               })
+              Loading.hide()
               break
           default:
               error.message = 'O E-mail ou a palavra-passe esta incorrecta'
               Dialog.create({
                 title: 'Error',
-                message: error.message
+                message: error.message,
               }).onOk(()=>{
                 console.log('Este E-mail invalido')
               })
+              Loading.hide()
               break
       }
       })
@@ -223,8 +228,9 @@ const actions = {
       console.log('Email sent.')
     })
   },
-
-
+  chooseRoute({}, payload){
+    console.log('payload', payload)
+  },
   logoutUser(){
     dbAuth.signOut()
     this.$router.push('/')
