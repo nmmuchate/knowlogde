@@ -8,7 +8,7 @@
       <ul role="list" class="divide-y divide-gray-200">
         <li v-for="(subject, key) in subjects" :key="key" class="py-3">
           <!-- past a path exams/ with a div -->
-          <router-link :to="'/exams/' + key" class="flex items-center">
+          <router-link :to="'/exams/'+ key" class="flex items-center">
             <div class="cursor-pointer flex items-center space-x-4">
               <div class="flex-shrink-0">
                 <q-avatar
@@ -57,7 +57,7 @@ export default {
           Loading.hide()
         })
       })
-    }
+    },
   },
   created(){
 

@@ -16,7 +16,7 @@
 
         </div>
         <!-- question container -->
-        <div class="rounded-lg bg-gray-100 p-2 .neumorph-1 text-center font-bold tex-gray-800 mt-8">
+        <div class="rounded-lg bg-gray-100 p-2 .neumorph-1 text-center font-bold text-gray-800 mt-8">
           <div class="bg-white p-5">
             {{currentQuestion.question}}
           </div>
@@ -40,7 +40,7 @@
                 <div class="p-3 rounded-lg">{{ charIndex(item) }}</div>
 
                 <!-- option text -->
-                <div class="flex items-center pl-6">{{ choice }}</div>
+                <div class="flex items-center bla pl-6">{{ choice }}</div>
               </div>
             </div>
           </div>
@@ -160,9 +160,13 @@
           }
         }, 1500)
       },
-      ifUserHitsAQuestion(){
+      //  // save the data in the firestore user
+      //     dbFApp.collection('users').doc(this.$store.state.user.uid).update({
+      //       score: this.score,
+      //       subject: this.subjectsf[this.$store.state.user.subject]
+      //     })
+      //     .then(() => {
 
-      },
       ifUserPassed(){
         if(this.score >= this.questions.length * 0.7){
           return true
@@ -176,6 +180,10 @@
             score: this.score
           })
         }
+      },
+      breakTheLine(){
+        // when a answer is too long break the line
+
       }
 
     },
@@ -227,5 +235,9 @@
   }
   .container{
     max-width: 400px;
+  }
+  .bla{
+    word-wrap: break-word;
+    display: block;
   }
 </style>
