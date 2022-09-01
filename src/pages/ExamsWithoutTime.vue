@@ -76,7 +76,7 @@
           incorrectAnswer: []
         },
         itemsRef: [],
-        subjectf: [
+        subjectsf: [
           'CAT1',
           'CAT10',
           'CAT2',
