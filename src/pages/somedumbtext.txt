@@ -34,8 +34,8 @@ export default {
           'Is a modern Java library for building user interfaces',
           'Is a modern PHP library for building user interfaces',
           'Is a modern C++ library for building user interfaces',
-        ],
-        selected: null
+          ],
+          selected: null
       },
     ])
     const quizCompleted = ref(false)

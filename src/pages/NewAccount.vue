@@ -90,7 +90,6 @@
 </template>
 
 <script>
-import { useQuasar } from 'quasar'
 import { mapActions } from "vuex";
 export default {
   data () {
@@ -103,14 +102,14 @@ export default {
         rememberMe: false,
         passwordConfirm: ''
       },
-
+      error: ''
     }
   },
   methods:{
     ...mapActions('auth', ['registerUser']),
-    onSubmit() {
-      this.registerUser(this.formData)
-    },
+    onSubmit(){
+      this.resgisterUser(this.formData)
+    }
   },
 
 }
