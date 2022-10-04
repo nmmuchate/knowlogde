@@ -1,5 +1,10 @@
 <template>
-  <q-page>
+  <q-page class="flex flex-center">
+    <q-btn @click='registerWithFbProvider()' class="btn">
+      Entrar
+    </q-btn>
+  </q-page>
+  <!-- <q-page>
       <div class="px-8 py-6">
     <div class="">
         <div class="flex justify-center">
@@ -92,37 +97,43 @@
             @click="$router.push('/register')"
           />
         </div>
-        <!-- Button for loggin with google provider -->
+        Button for loggin with google provider
     </div>
   </div>
-  </q-page>
+  </q-page> -->
 </template>
 
 <script>
-import { useQuasar } from 'quasar'
+// import { useQuasar } from 'quasar'
 import { mapActions } from "vuex";
 export default {
   data () {
 
-    return {
-      formData: {
-        email: '',
-        password: '',
-        rememberMe: false
-      },
+//     return {
+//       formData: {
+//         email: '',
+//         password: '',
+//         rememberMe: false
+//       },
 
-    }
+//     }
   },
   methods:{
-    ...mapActions('auth', ['loginUser', 'resetPassword', 'registerAndLoginWithGoogleProvider']),
-    onSubmit() {
-      this.loginUser(this.formData)
-    },
-    // rememberMe() {
-    //   // function to remember user
+    ...mapActions('auth', ['loginUser', 'resetPassword', 'registerAndLoginWithGoogleProvider', 'registerWithFbProvider']),
+  //   onSubmit() {
+  //     this.loginUser(this.formData)
+  //   },
+  //   // rememberMe() {
+  //   //   // function to remember user
 
-    // }
+  //   // }
   },
 
 }
 </script>
+<style>
+  .btn{
+    background-color: #9A6AFF;
+    color: #FFFFFF;
+  }
+</style>

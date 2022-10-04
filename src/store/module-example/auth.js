@@ -1,5 +1,5 @@
 import { Loading, Dialog, useQuasar } from 'quasar'
-import { dbAuth, dbFApp, provider } from 'src/boot/firebase'
+import { dbAuth, dbFApp, provider, providerFb } from 'src/boot/firebase'
 
 // import Vue from 'vue'
 // import { uid } from 'quasar'
@@ -125,6 +125,60 @@ const actions = {
       console.log(error.email)
       console.log(error. credential)
       Loading.hide();
+    })
+  },
+
+  registerWithFbProvider(){
+    Loading.show()
+    dbAuth.signInWithPopup(providerFb).then((result) => {
+      let credential = result.credential
+      let user = result.user
+      let accessToken = credential.accessToken
+      let userDetails = {
+        id: dbAuth.currentUser.uid,
+        name: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL,
+        createAt: new Date(),
+        updateAt: new Date(),
+        isOnline: true,
+        details: {
+          phone: user.phoneNumber,
+          subjectsLiked: [],
+          universitys: [],
+        },
+        detailsGame: {
+          highScore: 0,
+          countHowManyTimesPlayed:{
+            timesPlayed: 0,
+            timesWon: 0,
+            timesLost: 0,
+            subjectWithBigScore: '',
+            scores: [],
+          }
+        }
+      }
+      dbFApp.collection('users').doc(dbAuth.currentUser.uid).set(userDetails).then(res => {
+
+      this.$router.push('/home')
+      Loading.hide();
+      }).catch(err => {
+        console.log('err', err)
+
+      })
+      this.$router.push('/home')
+      Loading.hide()
+    }).catch((error) => {
+        // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // The email of the user's account used.
+      var email = error.email;
+      // The firebase.auth.AuthCredential type that was used.
+      var credential = error.credential;
+
+    // ...
+
     })
   },
 
