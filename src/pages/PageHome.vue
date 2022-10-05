@@ -2,7 +2,8 @@
   <q-page class="px-8 py-6">
     <div class='flex z-50 relative justify-between items-center mb-6'>
           <div  class='row items-center'>
-            <h1 class='text-2xl font-medium'>Olá, <br>{{userNameEmpty}}</h1>
+            <h1 class='text-2xl font-medium'>Bem-vindo</h1>
+            <!-- <h1 class='text-2xl font-medium'>Olá, <br>{{userNameEmpty}}</h1> -->
 
           </div>
           <div class='absolute top-0 right-0 h-16 w-16 items-center'>
@@ -34,7 +35,7 @@
         <q-item clickable>
           <div class='p-6 max-w-sm bg-green-300 rounded-lg border border-gray-200 shadow-md'>
             <h5 class='mb-2 text-2xl font-bold tracking-tight text-gray-900'>Teste o seu conhecimento sobre pressão</h5>
-            <p class='mb-3 font-normal text-gray-400'>
+            <p class='mb-3 font-normal text-gray-800'>
               Para cada questão tem apenas 15 segundos para responder. Este exercicio poderá ser muito útil para estudar sobre pressão.</p>
             <q-btn
               label="Experimente agora"
@@ -116,21 +117,21 @@ export default {
     }
   },
   mounted(){
-    // take user id from firebase
-    Loading.show({
-      message: 'Carregando...',
-    })
-    let userId = dbAuth.currentUser.uid
-    // get user name from firebase firestore
+    // // take user id from firebase
+    // Loading.show({
+    //   message: 'Carregando...',
+    // })
+    // let userId = dbAuth.currentUser.uid
+    // // get user name from firebase firestore
 
-    dbFApp.collection('users').doc(userId).get().then(doc => {
-      // set user name in vuex
-      this.userState = doc.data()
+    // dbFApp.collection('users').doc(userId).get().then(doc => {
+    //   // set user name in vuex
+    //   this.userState = doc.data()
 
-      Loading.hide()
-    }).catch(err => {
-      console.log('Error getting document', err);
-    });
+    //   Loading.hide()
+    // }).catch(err => {
+    //   console.log('Error getting document', err);
+    // });
   },
 }
 </script>

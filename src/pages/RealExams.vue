@@ -9,7 +9,10 @@
        <!-- quiz timer container -->
        <div class="bg-white shadow-lg p-1 rounded-full w-full h-3 mt-4">
 
-        <q-linear-progress rounded :value="timer" class="q-pa-xs"/>
+        <q-linear-progress
+          rounded
+          :value="timer"
+          class="q-pa-xs" />
 
       </div>
       <div class="rounded-lg bg-gray-100 p-2 .neumorph-1 text-center font-bold text-gray-800 mt-8">
@@ -29,14 +32,14 @@
                 <p class='transform -rotate-45'>+1</p>
               </div>
 
-              <div class="rounded-lg font-bold flex justify-center items-center p-2">
+              <div class="rounded-lg row font-bold flex justify-center items-center p-2">
 
                 <!-- answer ID -->
 
                 <div class="p-3 rounded-lg">{{ charIndex(item) }}</div>
 
                 <!-- option text -->
-                <div class=" bla pl-6">{{ choice }}</div>
+                <div class=" flex flex-center col-10 pl-6">{{ choice }}</div>
               </div>
             </div>
           </div>
@@ -92,7 +95,8 @@
           'CAT8',
           'CAT9',
         ],
-        userAnswers: []
+        userAnswers: [],
+        // divContainer:
       }
     },
     methods: {
@@ -106,18 +110,24 @@
           this.userAnswers[this.questionCounter] = choice
           console.log('user answers::',this.userAnswers)
 
+          const divContainer = this.itemsRef[item]
+          divContainer.classList.add('option-choosed')
 
           this.timer = 1
           this.canClick = false
-
         }else{
           console.log("Can't select question")
         }
       },
       clearSelected(){
         setTimeout(() =>{
+          for (let i = 0; i < this.itemsRef.length; i++) {
+            const divContainer = this.itemsRef[i]
+            divContainer.classList.remove('option-choosed')
+            divContainer.classList.add('option-default')
+            this.loadQuestion()
+          }
 
-          this.loadQuestion()
         }, 1000)
       },
       optionChosen(element){
@@ -131,17 +141,22 @@
           this.timer = 1
 
           this.currentQuestion = this.questions[this.questionCounter]
-
-          this.questionCounter++
         }else {
           this.endfoquizovr = true
           console.log('Out of Questions')
         }
       },
+      correctTheAnswer(){
+        this.score = 0
+        for(let i =0; i < this.userAnswers.length; i++){
+          console.log( 'correctAnswer>>', this.questions[i].correctAnswer === this.userAnswers[i])
+        }
+      },
       nextQuestion(){
-        if(this.questionCounter <this.questions.length )
+        if(this.questionCounter <this.questions.length)
         this.questionCounter ++
         this.clearSelected()
+        this.correctTheAnswer()
       },
       previousQuestion(){
         if(this.questions.length > 0){

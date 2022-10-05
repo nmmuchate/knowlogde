@@ -33,14 +33,14 @@
                 <p class='transform -rotate-45'>+1</p>
               </div>
 
-              <div class="rounded-lg font-bold flex p-2">
+              <div class="rounded-lg row font-bold flex p-2">
 
                 <!-- answer ID -->
 
                 <div class="p-3 rounded-lg">{{ charIndex(item) }}</div>
 
                 <!-- option text -->
-                <div class="flex items-center bla pl-6">{{ choice }}</div>
+                <div class="flex flex-center col-10 pl-6">{{ choice }}</div>
               </div>
             </div>
           </div>

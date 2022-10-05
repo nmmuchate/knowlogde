@@ -13,7 +13,7 @@
         </span>
       </div>
 
-      <div class="rounded-lg bg-gray-100 mt-12 p-2 neumorph-1 text-center font-bold text-gray-800 mt-8">
+      <div class="rounded-lg bg-gray-100 mt-12 p-2 neumorph-1 text-start font-bold text-gray-800 mt-8">
         <div class="bg-white p-5">
           {{ currentQuestion.question }}
         </div>
@@ -31,16 +31,18 @@
             </p>
           </div>
 
-          <div class="rounded-lg font-bold flex p-2">
+          <div class="rounded-lg row font-bold flex p-2">
 
             <div class="p-3 rounded-lg">
               {{ charIndex(item) }}
             </div>
 
-            <div class="flex items-center pl-6">
+            <div class="col-10 text-center flex flex-center pl-6">
               {{ choice }}
             </div>
-
+            <!-- <div class="col-10 text-center flex flex-center pl-6">
+              {{ choice }}
+            </div> -->
           </div>
         </div>
       </div>
@@ -97,9 +99,11 @@
       loadQuestion(){
         this.canClick = true
         if (this.questions.length > this.questionCounter) {
+          Loading.show()
           this.currentQuestion = this.questions[this.questionCounter]
 
           this.questionCounter++
+          Loading.hide()
         }else{
           this.endOfQuizOver = true
         }
