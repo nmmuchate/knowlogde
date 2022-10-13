@@ -16,7 +16,7 @@
 
         </div>
         <!-- question container -->
-        <div class="rounded-lg bg-gray-100 p-2 .neumorph-1 text-center font-bold text-gray-800 mt-8">
+        <div class="rounded-lg bg-gray-100 p-2 .neumorph-1 text-start font-bold text-gray-800 mt-8">
           <div class="bg-white p-5">
             {{currentQuestion.question}}
           </div>

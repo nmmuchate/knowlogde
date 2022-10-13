@@ -13,17 +13,20 @@
         </span>
       </div>
 
-      <div class="rounded-lg bg-gray-100 mt-12 p-2 neumorph-1 text-start font-bold text-gray-800 mt-8">
+      <div class="rounded-lg bg-gray-100 mt-12 p-2 .neumorph-1 text-start font-bold text-gray-800 mt-8">
         <div class="bg-white p-5">
           {{ currentQuestion.question }}
         </div>
       </div>
 
-      <div
+      <div class="mt-8">
+
+
+        <div
         v-for="(choice, item) in currentQuestion.incorrectAnswer"
         :key="item"
         class=""
-      >
+        >
         <div :ref="optionChosen" @click="onOptionClicked(choice, item)" class="neumorph-1 option-default bg-gray-100 p-2 rounded-lg mb-3 relative">
           <div class="bg-blue-500 p-1 transform rotate-45 rounded-md h-7 w-7 text-white font-bold absolute right-0 top-0 shadow-md">
             <p class="transform -rotate-45">
@@ -45,6 +48,7 @@
             </div> -->
           </div>
         </div>
+      </div>
       </div>
 
       <div class="mt-8 text-center">
