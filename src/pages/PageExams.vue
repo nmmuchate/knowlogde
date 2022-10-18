@@ -53,6 +53,17 @@
         </div>
       </div>
 
+      <!-- end of quiz overlay -->
+      <div v-if="endOfQuiz" class="bg-slate-800 bg-opacity-50 flex justify-center items-center z-30 absolute top-0 right-0 bottom-0 left-0">
+        <div class="bg-white px-16 py-14 rounded-md text-center">
+          <h1 class="text-xl mb-4 font-bold text-slate-500">Pontuação obtida: {{percentageScore}}%</h1>
+          <q-btn to="/home" class="bg-gray-500 px-7 py-2 ml-2 rounded-md text-md text-white font-semibold"> Inicio</q-btn>
+          <q-btn @click="onQuizStart()" class="bg-indigo-500 px-7 py-2 ml-2 rounded-md text-md text-white font-semibold">
+             outra vez
+          </q-btn>
+        </div>
+      </div>
+
   </q-page>
 </template>
 
@@ -64,12 +75,13 @@
   // import '../index.css'
 
   import EndOfQuiz from 'src/components/Quiz/EndOfQuiz'
+
   export default {
     data(){
 
       return{
         canClick: true,
-        endfoquizovr: false,
+        endOfQuiz: false,
         score: 0,
         timer: 100,
         questionCounter:0,
@@ -91,7 +103,8 @@
           'CAT7',
           'CAT8',
           'CAT9',
-        ]
+        ],
+        percentageScore: 0
       }
     },
     components:{
@@ -111,7 +124,8 @@
 
           this.questionCounter++
         }else {
-          this.endfoquizovr = true
+          this.endOfQuiz = true
+          this.onQuizEnd()
           console.log('Out of Questions')
         }
       },
@@ -156,6 +170,7 @@
             this.timer -= 0.1;
           } else {
             console.log('Time is up')
+            this.onQuizEnd()
             clearInterval(countDown)
           }
         }, 1500)
@@ -181,14 +196,31 @@
           })
         }
       },
-      breakTheLine(){
+      onQuizEnd(){
         // when a answer is too long break the line
+        this.percentageScore = (this.score/100)*1000
+        this.timer = 0
+        this.endOfQuiz = true
+      },
+      onQuizStart(){
+        //set default values
+        this.canClick = true
+        this.timer = 100
+        this.endOfQuiz = false
+        this.questionCounter = 0
+        this.score = 0
+        this.currentQuestion = {
+          question: '',
+          correctAnswer: '',
+          incorrectAnswer: []
+        }
+        this.questions = []
+        this.percentageScore = 0
 
-      }
-
-    },
-    mounted(){
-      Loading.show({
+        this.fetchData()
+      },
+      fetchData(){
+        Loading.show({
         message: 'Carregando as questões...'
       })
       let docRef =dbFApp.collection('QUIZ').doc(this.subjectsf[this.$route.params.id])
@@ -225,6 +257,11 @@
         }).catch((error) => {
     console.log("Error getting document:", error);
 });
+      }
+
+    },
+    mounted(){
+      this.fetchData()
     },
   }
 </script>
