@@ -7,15 +7,18 @@
           <div class="grid grid-cols-1 md:grid-cols-3">
             <div class="grid grid-cols-3 text-center order-last md:order-first mt-20 md:mt-0">
               <div>
+                <!-- <p class="font-bold text-gray-700 text-xl">18</p> -->
                 <p class="font-bold text-gray-700 text-xl">{{userDetails.detailsGame.countHowManyTimesPlayed.timesPlayed}}</p>
                 <p class="text-gray-400">Jogados</p>
               </div>
               <div>
                 <p class="font-bold text-gray-700 text-xl">{{userDetails.detailsGame.countHowManyTimesPlayed.timesLost}}</p>
+                <!-- <p class="font-bold text-gray-700 text-xl">5</p> -->
                 <p class="text-gray-400">Perdidos</p>
               </div>
                   <div>
                   <p class="font-bold text-gray-700 text-xl">{{userDetails.detailsGame.countHowManyTimesPlayed.timesWon}}</p>
+                  <!-- <p class="font-bold text-gray-700 text-xl">13</p> -->
                 <p class="text-gray-400">Vencidos</p>
               </div>
             </div>
