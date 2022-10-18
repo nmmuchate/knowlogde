@@ -2,8 +2,8 @@
   <q-page class="px-8 py-6">
     <div class='flex z-50 relative justify-between items-center mb-6'>
           <div  class='row items-center'>
-            <h1 class='text-2xl font-medium'>Bem-vindo</h1>
-            <!-- <h1 class='text-2xl font-medium'>Olá, <br>{{userNameEmpty}}</h1> -->
+            <!-- <h1 class='text-2xl font-medium'>Bem-vindo</h1> -->
+            <h1 class='text-2xl font-medium'>Olá, <br>{{userNameEmpty}}</h1>
 
           </div>
           <div class='absolute top-0 right-0 h-16 w-16 items-center'>
