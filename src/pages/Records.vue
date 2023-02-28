@@ -149,6 +149,7 @@
         this.users.push(...snapshot.docs.map(doc => doc.data()))
         // sort users by high score and get top 10 users
         return this.users.sort((a, b) => {
+          console.log('this users',this.users)
           return b.detailsGame.highScore - a.detailsGame.highScore
         }).slice(0, 10)
       })
