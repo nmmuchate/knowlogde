@@ -81,6 +81,10 @@ export default {
         this.title = 'Disciplinas'
         return this.isShowedHeader
       }
+      else if (currentPath == '/subjectswithouttime') {
+        this.title = 'Disciplinas'
+        return this.isShowedHeader
+      }
       else if (currentPath == '/sendquestion') {
         this.title = 'Add Questões'
         return this.isShowedHeader
@@ -95,6 +99,6 @@ export default {
 </script>
 <style>
 .container{
-  max-width: 400px;
+  max-width: 640px;
 }
 </style>
