@@ -21,7 +21,7 @@
 }
 
 .option-wrong  div:nth-child(1){
-  display: none; 
+  display: none;
 }
 
 .option-wrong div:nth-child(2) div:nth-child(1){
@@ -52,4 +52,23 @@
 .option-correct div:nth-child(2){
   background-color: #22c55e;
   color: #ffffff;
+}
+
+/* answer choosed custom classes */
+.option-choosed {
+  cursor: pointer;
+}
+
+/* .option-choosed div:nth-child(1){
+  display: inline;
+} */
+
+.option-choosed div:nth-child(2) div:nth-child(1){
+  background-color: #262626;
+  color: #ffffff;
+}
+
+.option-choosed div:nth-child(2){
+  background-color: #292b2a;
+  color: #b8b3b3;
 }
