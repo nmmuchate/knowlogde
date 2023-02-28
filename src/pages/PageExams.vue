@@ -255,9 +255,11 @@
           console.log('No such a document')
         }
         }).catch((error) => {
-    console.log("Error getting document:", error);
-});
+          console.log("Error getting document:", error);
+        });
       }
+      // add score after game
+
 
     },
     mounted(){
