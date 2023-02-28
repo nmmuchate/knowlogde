@@ -47,7 +47,9 @@
         <!-- progress indicator container -->
         <div class='mt-8 text-center'>
           <div class='h-1 w-12 rounded-full bg-gray-800 mx-auto'>
-            <p class='text-gray-800 font-bold'>{{questionCounter}}/{{questions.length}}</p>
+           <p
+              class='text-gray-800
+              font-bold'>{{questionCounter}}/{{questions.length}}</p>
           </div>
         </div>
         <q-footer  class="bg-white text-primary">
@@ -55,12 +57,58 @@
             color="white"
             @click="previousQuestion()"
             text-color="black"
-            label="Anterior" />
+            label="Anterior"
+          />
           <q-btn
+            v-if="this.questionCounter <this.questions.length - 1"
             @click="nextQuestion()"
             color="primary"
-            label="Próxima" />
+            label="Próxima"
+          />
+          <q-btn
+            v-else
+            @click="showResults()"
+            color="primary"
+            label="Ver resultado" />
         </q-footer>
+      </div>
+      <div v-if="endOfQuiz" class="bg-slate-800 bg-opacity-50 flex justify-center items-center z-30 absolute top-0 right-0 bottom-0 left-0">
+        <div class="bg-white px-16 py-14 rounded-md text-center">
+          <h1 class="text-xl mb-4 font-bold text-slate-500">Pontuação obtida: {{score}}%</h1>
+
+            <!-- <p>{{ question.question }} : {{ userAnswers[item] }}</p> -->
+            <!-- <table>
+              <thead>
+                <tr>
+                  <th>Questões</th>
+                  <th>Respostas</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                  <tr>
+                    <td>{{ question.question }}</td>
+                    <td>{{ userAnswers[item] }}</td>
+                  </tr>
+                </div>
+              </tbody>
+            </table> -->
+            <q-btn @click="showDetailsQuestions()" class="full-width bg-gray-900 py-2 ml-2 rounded-md text-md text-white font-semibold" label="Respostas" />
+            <div v-for="(question, item) in questions" :key="question">
+              <div v-if="showDetails"  class="bg-gray-200 bg-opacity-100 flex justify-center items-center z-40">
+                <h2 class="text-md font-medium text-white">QUESTÃO: {{ question.question }}</h2><br>
+                <h1 class="text-xl mb-4 font-bold text-slate-500">RESPOSTA: {{ userAnswers[item] }}</h1>
+              </div>
+            </div>
+          <q-btn
+            to="/home"
+            class="bg-gray-500 px-7 py-2 ml-2 rounded-md text-md text-white font-semibold"> Inicio</q-btn>
+          <q-btn
+            @click="onQuizStart()"
+            class="bg-indigo-500 px-7 py-2 ml-2 rounded-md text-md text-white font-semibold">
+             outra vez
+          </q-btn>
+        </div>
       </div>
   </q-page>
 </template>
@@ -72,7 +120,7 @@
     data(){
       return{
         canClick: true,
-        endOfQuizOvr: false,
+        endOfQuiz: false,
         score: 0,
         timer: 100,
         questionCounter: 0,
@@ -96,7 +144,7 @@
           'CAT9',
         ],
         userAnswers: [],
-        // divContainer:
+        showDetails: false
       }
     },
     methods: {
@@ -105,10 +153,9 @@
       },
       onOptionClicked(choice, item){
 
-        console.log('choice', choice)
         if(this.canClick){
           this.userAnswers[this.questionCounter] = choice
-          console.log('user answers::',this.userAnswers)
+          console.log('user answers::',this.questions)
 
           const divContainer = this.itemsRef[item]
           divContainer.classList.add('option-choosed')
@@ -149,39 +196,68 @@
       correctTheAnswer(){
         this.score = 0
         for(let i =0; i < this.userAnswers.length; i++){
-          console.log( 'correctAnswer>>', this.questions[i].correctAnswer === this.userAnswers[i])
+          if(this.questions[i].correctAnswer === this.userAnswers[i]){
+            this.score += 10
+          }
         }
       },
       nextQuestion(){
         if(this.questionCounter <this.questions.length)
         this.questionCounter ++
         this.clearSelected()
-        this.correctTheAnswer()
       },
       previousQuestion(){
         if(this.questions.length > 0){
           this.questionCounter --
           this.clearSelected()
         }
-      }
-    },
-    mounted(){
+      },
+      showResults(){
+        this.correctTheAnswer()
+        this.endOfQuiz = true
+        console.log(this.score)
+      },
+      onQuizStart(){
+        //set default values
+        this.canClick = true
+        this.endOfQuiz = false
+        this.questionCounter = 0
+        this.score = 0
+        this.currentQuestion = {
+          question: '',
+          correctAnswer: '',
+          incorrectAnswer: []
+        }
+        this.questions = []
+        this.percentageScore = 0
+
+        this.fetchData()
+      },
+      showDetailsQuestions(){
+        if(this.showDetails){
+          this.showDetails = false
+        }else{
+          this.showDetails = true
+        }
+      },
+      fetchData(){
+
       Loading.show({
         message: 'Carregando as questões...'
       })
       let docRef =dbFApp.collection('QUIZ').doc(this.subjectsf[this.$route.params.id])
       docRef.get().then((querySnapshot) => {
-        if (querySnapshot.exists) {
-            const newQuestions = querySnapshot.data().questions
+        if(querySnapshot.exists){
+          const newQuestions = querySnapshot.data().questions
 
-            newQuestions.map((serverQuestion) => {
-              const arrangedQuestion = {
-                question: serverQuestion.question,
-                choices: '',
-                answer: ''
-              };
+          newQuestions.map((serverQuestion) => {
+            const arrangedQuestion = {
+              question: serverQuestion.question,
+              choices: '',
+              answer: ''
+            };
 
-              const choices = serverQuestion.incorrectAnswer;
+            const choices = serverQuestion.incorrectAnswer;
 
               arrangedQuestion.answer = Math.floor(Math.random() * 4 + 1);
 
@@ -199,13 +275,47 @@
     } else{
       this.$router.push("/home")
     }
-  }).catch((error) => {
+    }).catch((error) => {
       console.log("Error Getting document")
-  })
-  },
+    })
+      }
+    },
+    mounted(){
+      this.fetchData()
+    },
 }
 </script>
 
 <style>
-
+  table thead tr th:first-child,
+  table tbody tr td:first-child {
+    border-radius: 0.25rem 0 0 0.25rem;
+  }
+  table thead tr th:last-child,
+  table tbody tr td:last-child {
+    border-radius: 0 0.25rem 0.25rem 0;
+  }
+  #data-table {
+    width: 90%;
+    border-spacing: 0 0.5rem;
+  }
+  table th {
+    background: #ffffff;
+    font-family: 'Inter', sans-serif;
+    font-weight: normal;
+    padding: 1rem 2rem;
+    text-align: left;
+    color: #969cb3;
+  }
+  table tr {
+    opacity: 0.7;
+  }
+  table tbody tr:hover {
+    opacity: 1;
+  }
+  table td {
+    background: #ffffff;
+    padding: 1rem 2rem;
+    color: #969cb3;
+  }
 </style>
