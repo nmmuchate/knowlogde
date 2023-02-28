@@ -2,7 +2,7 @@
   <q-page>
     <img src='../assets/copycopy.svg' alt='' class='absolute -top-25 left-0 object-none'>
 
-    <div class="relative z-20 px-8 py-6">
+    <div class="relative z-20 px-8 py-6 ">
 
       <div class="text-gray-800 text-right">
         <span class="font-medium">
@@ -20,15 +20,17 @@
       </div>
 
       <div class="mt-8">
-
-
-        <div
-        v-for="(choice, item) in currentQuestion.incorrectAnswer"
-        :key="item"
-        class=""
+          <div
+          v-for="(choice, item) in currentQuestion.incorrectAnswer"
+          :key="item"
+          class=""
         >
-        <div :ref="optionChosen" @click="onOptionClicked(choice, item)" class="neumorph-1 option-default bg-gray-100 p-2 rounded-lg mb-3 relative">
-          <div class="bg-blue-500 p-1 transform rotate-45 rounded-md h-7 w-7 text-white font-bold absolute right-0 top-0 shadow-md">
+        <div
+          :ref="optionChosen"
+          @click="onOptionClicked(choice, item)"
+          class="neumorph-1 option-default bg-gray-100 p-2 rounded-lg mb-3 relative">
+         <div
+            class="bg-blue-500 p-1 transform rotate-45 rounded-md h-7 w-7 text-white font-bold absolute right-0 top-0 shadow-md">
             <p class="transform -rotate-45">
               +1
             </p>
@@ -43,9 +45,7 @@
             <div class="col-10 text-center flex flex-center pl-6">
               {{ choice }}
             </div>
-            <!-- <div class="col-10 text-center flex flex-center pl-6">
-              {{ choice }}
-            </div> -->
+
           </div>
         </div>
       </div>
