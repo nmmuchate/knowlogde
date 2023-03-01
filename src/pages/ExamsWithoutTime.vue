@@ -47,6 +47,7 @@
             </div>
 
           </div>
+
         </div>
       </div>
       </div>
@@ -60,6 +61,19 @@
       </div>
 
     </div>
+    <div v-if="endOfQuiz" class="bg-slate-800 bg-opacity-50 flex justify-center items-center z-30 absolute top-0 right-0 bottom-0 left-0">
+        <div class="bg-white px-16 py-14 rounded-md text-center">
+          <h1 class="text-xl mb-4 font-bold text-slate-500">Pontuação obtida: {{score}}%</h1>
+          <q-btn
+            to="/home"
+            class="bg-gray-500 px-7 py-2 ml-2 rounded-md text-md text-white font-semibold"> Inicio</q-btn>
+          <q-btn
+            @click="onQuizStart()"
+            class="bg-indigo-500 px-7 py-2 ml-2 rounded-md text-md text-white font-semibold">
+             outra vez
+          </q-btn>
+        </div>
+      </div>
   </q-page>
 </template>
 
@@ -72,7 +86,7 @@
     data(){
       return{
         canClick: true,
-        endOfQuizOver: false,
+        endOfQuiz: false,
         score: 0,
         questionCounter: 0,
         questions: [],
@@ -93,7 +107,8 @@
           'CAT7',
           'CAT8',
           'CAT9',
-        ]
+        ],
+        percentageScore: 0
       }
     },
     methods: {
@@ -109,7 +124,8 @@
           this.questionCounter++
           Loading.hide()
         }else{
-          this.endOfQuizOver = true
+          this.endOfQuiz = true
+          Loading.hide()
         }
       },
       optionChosen(element) {
@@ -144,45 +160,63 @@
         }else {
           console.log('Cant Select Question')
         }
+      },
+      onQuizStart(){
+        this.canClick = true
+        this.endOfQuiz = false
+        this.questionCounter = 0
+        this.score = 0
+        this.currentQuestion = {
+          question: '',
+          correctAnswer: '',
+          incorrectAnswer: []
+        }
+        this.questions = []
+        this.percentageScore = 0
+
+        this.fetchData()
+      },
+      fetchData(){
+        Loading.show({
+        message: 'Carregando as questões...'
+        })
+        let docRef =dbFApp.collection('QUIZ').doc(this.subjectsf[this.$route.params.id])
+        docRef.get().then((querySnapshot) => {
+          if (querySnapshot.exists) {
+            const newQuestions = querySnapshot.data().questions
+
+            newQuestions.map((serverQuestion) => {
+              const arrangedQuestion = {
+                question: serverQuestion.question,
+                choices: '',
+                answer: ''
+              };
+
+              const choices = serverQuestion.incorrectAnswer;
+
+              arrangedQuestion.answer = Math.floor(Math.random() * 4 + 1);
+
+              choices.splice(arrangedQuestion.answer - 1, 0, serverQuestion.correctAnswer)
+
+              arrangedQuestion.choices = choices;
+
+              return arrangedQuestion;
+            });
+            // console.log('new questions ::' , newQuestions.sort(() => Math.random() - 0.5))
+            newQuestions.sort(() => Math.random() - 0.5)
+            this.questions = newQuestions;
+            this.loadQuestion()
+            Loading.hide()
+          }else{
+            console.log('No such a document')
+          }
+        }).catch((error) => {
+          console.log("Error getting document:", error.message);
+        })
       }
     },
     mounted(){
-      Loading.show({
-        message: 'Carregando as questões...'
-      })
-      let docRef =dbFApp.collection('QUIZ').doc(this.subjectsf[this.$route.params.id])
-      docRef.get().then((querySnapshot) => {
-        if (querySnapshot.exists) {
-          const newQuestions = querySnapshot.data().questions
-
-          newQuestions.map((serverQuestion) => {
-            const arrangedQuestion = {
-              question: serverQuestion.question,
-              choices: '',
-              answer: ''
-            };
-
-            const choices = serverQuestion.incorrectAnswer;
-
-            arrangedQuestion.answer = Math.floor(Math.random() * 4 + 1);
-
-            choices.splice(arrangedQuestion.answer - 1, 0, serverQuestion.correctAnswer)
-
-            arrangedQuestion.choices = choices;
-
-            return arrangedQuestion;
-          });
-          // console.log('new questions ::' , newQuestions.sort(() => Math.random() - 0.5))
-          newQuestions.sort(() => Math.random() - 0.5)
-          this.questions = newQuestions;
-          this.loadQuestion()
-          Loading.hide()
-        }else{
-          console.log('No such a document')
-        }
-      }).catch((error) => {
-        console.log("Error getting document:", error.message);
-      })
+      this.fetchData()
     },
   }
 </script>
