@@ -76,23 +76,7 @@
         <div class="bg-white px-16 py-14 rounded-md text-center">
           <h1 class="text-xl mb-4 font-bold text-slate-500">Pontuação obtida: {{score}}%</h1>
 
-            <!-- <p>{{ question.question }} : {{ userAnswers[item] }}</p> -->
-            <!-- <table>
-              <thead>
-                <tr>
-                  <th>Questões</th>
-                  <th>Respostas</th>
-                </tr>
-              </thead>
-              <tbody>
 
-                  <tr>
-                    <td>{{ question.question }}</td>
-                    <td>{{ userAnswers[item] }}</td>
-                  </tr>
-                </div>
-              </tbody>
-            </table> -->
             <q-btn @click="showDetailsQuestions()" class="full-width bg-gray-900 py-2 ml-2 rounded-md text-md text-white font-semibold" label="Respostas" />
             <div v-for="(question, item) in questions" :key="question">
               <div v-if="showDetails"  class="bg-gray-200 bg-opacity-100 flex justify-center items-center z-40">
@@ -287,35 +271,4 @@
 </script>
 
 <style>
-  table thead tr th:first-child,
-  table tbody tr td:first-child {
-    border-radius: 0.25rem 0 0 0.25rem;
-  }
-  table thead tr th:last-child,
-  table tbody tr td:last-child {
-    border-radius: 0 0.25rem 0.25rem 0;
-  }
-  #data-table {
-    width: 90%;
-    border-spacing: 0 0.5rem;
-  }
-  table th {
-    background: #ffffff;
-    font-family: 'Inter', sans-serif;
-    font-weight: normal;
-    padding: 1rem 2rem;
-    text-align: left;
-    color: #969cb3;
-  }
-  table tr {
-    opacity: 0.7;
-  }
-  table tbody tr:hover {
-    opacity: 1;
-  }
-  table td {
-    background: #ffffff;
-    padding: 1rem 2rem;
-    color: #969cb3;
-  }
 </style>
