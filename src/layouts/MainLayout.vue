@@ -7,6 +7,7 @@
       <q-header v-if="showHeader" class="bg-white align-center text-primary">
         <q-toolbar>
           <q-btn
+            to="/home"
             flat
             round
             color="indigo-8"
