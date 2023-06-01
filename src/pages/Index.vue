@@ -1,7 +1,9 @@
 <template>
-  <q-page class="flex flex-center">
-    <div className="shadow-xl mt-32 p-10 text-gray-700 rounded-lg">
-      <h2 className="text-3xl font-medium text-center">Junte-se a nós hoje</h2>
+  <q-page class="">
+    <image-slide class="px-10"/>
+    <div class="flex flex-center">
+      <div className="shadow-xl p-10 text-gray-900 rounded-lg">
+      <h2 className="text-2xl font-bold text-center">Junte-se a nós hoje</h2>
       <div className="py-4">
         <h3 className="py-4 text-center">Faça login com um dos provedores</h3>
         <div className="flex flex-col gap-4">
@@ -38,6 +40,7 @@
           </q-btn>
         </div>
       </div>
+    </div>
     </div>
   </q-page>
   <!-- <q-page>
@@ -87,6 +90,7 @@
 <script>
 // import { useQuasar } from 'quasar'
 import { mapActions } from "vuex";
+import ImageSlide from '../components/other/ImageSlideComponent.vue'
 export default {
   data () {
 
@@ -98,6 +102,9 @@ export default {
 //       },
 
 //     }
+  },
+  components: {
+    ImageSlide
   },
   methods:{
     ...mapActions('auth',
