@@ -1,4 +1,4 @@
-import { Loading, Dialog, useQuasar } from 'quasar'
+import { Loading, Dialog, Notify } from 'quasar'
 import { dbAuth, dbFApp, provider, providerFb } from 'src/boot/firebase'
 
 // import Vue from 'vue'
@@ -113,17 +113,28 @@ const actions = {
       }
       dbFApp.collection('users').doc(dbAuth.currentUser.uid).set(userDetails).then(res => {
         // Após o login bem-sucedido
-      this.$router.push('/home')
-      this.$q.notify({
-        message: 'Login bem-sucedido. Bem-vindo!',
-        type: 'positive',
-        position: 'top',
-        timeout: 3000 // Tempo em milissegundos para a notificação desaparecer automaticamente
-      })
-      Loading.hide();
+        this.$router.push('/home')
+        Notify.create({
+          message: 'Login bem-sucedido. Bem-vindo!',
+          type: 'positive',
+          position: 'top',
+          timeout: 3000 // Tempo em milissegundos para a notificação desaparecer automaticamente
+        })
+        Loading.hide();
       }).catch(err => {
-        console.log('err', err)
 
+        switch (err.code) {
+          case 'auth/account-exists-with-different-credential':
+            this.errorMessage = 'Esta conta de e-mail já está associada a uma conta usando outro método de autenticação.'
+            // Fornecer orientações sobre como proceder
+            break
+            case 'auth/popup-closed-by-user':
+              this.errorMessage = 'O processo de login foi interrompido. Por favor, tente novamente.'
+              // Fornecer orientações sobre como proceder
+              break
+              default:
+                this.errorMessage = 'Erro ao autenticar. Por favor, tente novamente.'
+        }
       })
     }).catch((error) => {
       console.log(error.message)
