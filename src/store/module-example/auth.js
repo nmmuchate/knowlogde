@@ -123,25 +123,20 @@ const actions = {
         Loading.hide();
       }).catch(err => {
 
-        switch (err.code) {
-          case 'auth/account-exists-with-different-credential':
-            this.errorMessage = 'Esta conta de e-mail já está associada a uma conta usando outro método de autenticação.'
-            // Fornecer orientações sobre como proceder
-            break
-            case 'auth/popup-closed-by-user':
-              this.errorMessage = 'O processo de login foi interrompido. Por favor, tente novamente.'
-              // Fornecer orientações sobre como proceder
-              break
-              default:
-                this.errorMessage = 'Erro ao autenticar. Por favor, tente novamente.'
-        }
       })
     }).catch((error) => {
-      console.log(error.message)
-      console.log(error.code)
-      console.log(error.email)
-      console.log(error. credential)
-      Loading.hide();
+      switch (error.code) {
+        case 'auth/account-exists-with-different-credential':
+          this.errorMessage = 'Esta conta de e-mail já está associada a uma conta usando outro método de autenticação.'
+          // Fornecer orientações sobre como proceder
+          break
+          case 'auth/popup-closed-by-user':
+            this.errorMessage = 'O processo de login foi interrompido. Por favor, tente novamente.'
+            // Fornecer orientações sobre como proceder
+            break
+            default:
+              this.errorMessage = 'Erro ao autenticar. Por favor, tente novamente.'
+      }
     })
   },
 
