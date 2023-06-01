@@ -79,7 +79,7 @@ const actions = {
 
   registerAndLoginWithGoogleProvider(){
     Loading.show();
-    dbAuth.signInWithPopup(provider).then(res => {
+    dbAuth.signInWithPopup (provider).then(res => {
       let credential = res.credential;
       let token = credential.accessToken;
       let user = res.user;
@@ -112,8 +112,14 @@ const actions = {
         }
       }
       dbFApp.collection('users').doc(dbAuth.currentUser.uid).set(userDetails).then(res => {
-
+        // Após o login bem-sucedido
       this.$router.push('/home')
+      this.$q.notify({
+        message: 'Login bem-sucedido. Bem-vindo!',
+        type: 'positive',
+        position: 'top',
+        timeout: 3000 // Tempo em milissegundos para a notificação desaparecer automaticamente
+      })
       Loading.hide();
       }).catch(err => {
         console.log('err', err)
